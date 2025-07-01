@@ -467,6 +467,33 @@
   animation: gradient-shift 8s ease infinite;
 }
 
+/* Eagle Speech Bubble Animation */
+@keyframes eagle-bounce {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-3px) rotate(1deg); }
+  50% { transform: translateY(-6px) rotate(0deg); }
+  75% { transform: translateY(-3px) rotate(-1deg); }
+}
+
+.eagle-speech-animate {
+  animation: eagle-bounce 2s ease-in-out infinite;
+}
+
+@keyframes speech-bubble-appear {
+  0% { 
+    opacity: 0; 
+    transform: translateX(-50%) translateY(10px) scale(0.8); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: translateX(-50%) translateY(0) scale(1); 
+  }
+}
+
+.speech-bubble-entrance {
+  animation: speech-bubble-appear 0.5s ease-out forwards;
+}
+
 /* 3D Effects and Enhanced Styling */
 @layer utilities {
   .perspective-1000 {

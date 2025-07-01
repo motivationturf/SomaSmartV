@@ -264,12 +264,29 @@ export function LandingPage({
               </div>
 
               {/* Eagle Mascot with Quick Actions */}
-              <Card className="p-4 bg-gradient-to-br from-green-50 to-blue-50 border-green-200">
-                <div className="flex items-center space-x-3">
-                  <ChisomoEagle size="md" mood="happy" className="flex-shrink-0" />
+              <Card className="p-4 bg-gradient-to-br from-green-50 to-blue-50 border-green-200 relative overflow-visible">
+                <div className="flex items-start space-x-3">
+                  <div className="flex-shrink-0 relative">
+                    <div className="eagle-speech-animate">
+                      <ChisomoEagle 
+                        size="sm" 
+                        mood="happy" 
+                        showBubble={false}
+                        animated={true}
+                      />
+                    </div>
+                    {/* Custom speech bubble positioned better */}
+                    <div className="absolute -top-8 left-1/2 bg-amber-100 border border-amber-200 rounded-lg px-3 py-1 shadow-lg z-10 speech-bubble-entrance">
+                      <div className="text-xs text-amber-800 font-medium whitespace-nowrap">
+                        "Ready to soar?"
+                      </div>
+                      {/* Speech bubble arrow */}
+                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-amber-200"></div>
+                    </div>
+                  </div>
                   <div className="flex-1">
                     <h4 className="font-bold text-gray-900 mb-1">Meet Chisomo!</h4>
-                    <p className="text-sm text-gray-600 mb-2">Your AI learning companion</p>
+                    <p className="text-sm text-gray-600 mb-2">Your AI learning companion ready to guide you</p>
                     <div className="flex gap-2">
                       <Button size="sm" variant="outline" onClick={() => onNavigate('subjects')} className="text-xs">
                         Start Learning
