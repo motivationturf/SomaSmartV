@@ -86,23 +86,23 @@ export function Navigation({ currentView, onNavigate, user, isGuest = false, onL
 
   return (
     <>
-      {/* Desktop Navigation */}
-      <nav className="hidden md:flex bg-white shadow-sm border-b sticky top-0 z-40">
+      {/* Enhanced Desktop Navigation with Zambian Theming */}
+      <nav className="hidden md:flex header-zambian shadow-lg border-b border-green-700/20 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 w-full">
           <div className="flex items-center justify-between h-16">
-            {/* Clickable Logo */}
+            {/* Enhanced Clickable Logo */}
             <button 
               onClick={handleLogoClick}
-              className="flex items-center space-x-3 hover:opacity-80 transition-opacity duration-200 group"
+              className="flex items-center space-x-3 hover:scale-105 transition-all duration-300 group"
             >
-              <div className="w-8 h-8 bg-gradient-to-r from-green-600 to-blue-600 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
-                <GraduationCap className="h-5 w-5 text-white" />
+              <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                <GraduationCap className="h-6 w-6 text-white" />
               </div>
-              <h1 className="text-xl font-bold text-gray-900 group-hover:text-green-600 transition-colors duration-200">
+              <h1 className="text-xl font-bold text-white drop-shadow-lg group-hover:scale-105 transition-transform duration-300">
                 SomaSmart EduHub
               </h1>
               {isGuest && (
-                <span className="px-2 py-1 bg-orange-100 text-orange-700 text-xs font-medium rounded-full">
+                <span className="px-3 py-1 bg-orange-500/90 text-white text-xs font-bold rounded-full shadow-lg backdrop-blur-sm">
                   Guest Mode
                 </span>
               )}
