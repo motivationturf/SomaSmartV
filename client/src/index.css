@@ -4,17 +4,21 @@
 
 /* Zambian-themed color palette */
 :root {
-  /* Primary Zambian colors */
+  /* Primary Zambian colors - Green focused */
   --zambian-green: #00a651;
-  --zambian-red: #de2910;
   --zambian-orange: #ff7f00;
   --zambian-copper: #b87333;
+  --zambian-gold: #fbbf24;
   
-  /* Extended palette */
+  /* Extended green palette */
   --emerald-light: #10b981;
   --emerald-dark: #047857;
+  --forest-green: #059669;
+  --sage-green: #16a34a;
+  
+  /* Warm accent colors */
   --sunset-orange: #f97316;
-  --sunset-red: #dc2626;
+  --amber-warm: #f59e0b;
   --copper-light: #d4af8c;
   --copper-dark: #8b5a2b;
   
@@ -363,7 +367,7 @@
 
 /* Hero Section Animations */
 .hero-title {
-  background: linear-gradient(-45deg, var(--zambian-green), var(--emerald-light), var(--sunset-orange), var(--zambian-red));
+  background: linear-gradient(-45deg, var(--zambian-green), var(--emerald-light), var(--sunset-orange), var(--zambian-gold));
   background-size: 400% 400%;
   animation: gradient-shift 4s ease infinite;
   -webkit-background-clip: text;
@@ -460,8 +464,8 @@
   background: linear-gradient(135deg, 
     var(--zambian-green) 0%, 
     var(--emerald-light) 25%, 
-    var(--sunset-orange) 75%, 
-    var(--zambian-red) 100%
+    var(--sunset-orange) 60%, 
+    var(--zambian-copper) 100%
   );
   background-size: 200% 200%;
   animation: gradient-shift 8s ease infinite;

@@ -72,21 +72,21 @@ export function LandingPage({
       name: 'Mathematics',
       icon: '📊',
       description: 'Algebra, geometry, calculus, and problem-solving',
-      color: 'from-amber-500 via-orange-500 to-red-500'
+      color: 'from-amber-500 via-orange-500 to-yellow-500'
     },
     {
       id: 'sciences',
       name: 'Sciences',
       icon: '🔬',
       description: 'Physics, chemistry, biology, and experiments',
-      color: 'from-red-600 via-orange-500 to-yellow-500'
+      color: 'from-emerald-600 via-green-500 to-teal-500'
     },
     {
       id: 'religious-education',
       name: 'Religious Education',
       icon: '📚',
       description: 'World religions, ethics, and moral philosophy',
-      color: 'from-emerald-600 via-green-500 to-teal-500'
+      color: 'from-orange-500 via-amber-500 to-yellow-500'
     }
   ];
 
@@ -109,15 +109,15 @@ export function LandingPage({
       icon: Users,
       title: 'Social Learning',
       description: 'Compete with friends and learn together in challenges',
-      color: 'text-red-600',
-      bg: 'bg-red-100'
+      color: 'text-emerald-600',
+      bg: 'bg-emerald-100'
     },
     {
       icon: Target,
       title: 'Curriculum Aligned',
       description: 'Content designed specifically for Zambian high school students',
-      color: 'text-emerald-600',
-      bg: 'bg-emerald-100'
+      color: 'text-orange-600',
+      bg: 'bg-orange-100'
     }
   ];
 
@@ -154,7 +154,7 @@ export function LandingPage({
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="floating-icon absolute top-20 left-10 text-6xl opacity-20" style={{ color: 'var(--zambian-green)' }}>📚</div>
         <div className="floating-icon absolute top-40 right-20 text-5xl opacity-20" style={{ color: 'var(--sunset-orange)' }}>🎯</div>
-        <div className="floating-icon absolute bottom-40 left-1/4 text-4xl opacity-20" style={{ color: 'var(--zambian-red)' }}>🏆</div>
+        <div className="floating-icon absolute bottom-40 left-1/4 text-4xl opacity-20" style={{ color: 'var(--zambian-gold)' }}>🏆</div>
         <div className="floating-icon absolute bottom-20 right-1/3 text-7xl opacity-20" style={{ color: 'var(--emerald-light)' }}>⚡</div>
         <div className="floating-icon absolute top-1/2 left-10 text-5xl opacity-20" style={{ color: 'var(--copper-light)' }}>🌟</div>
       </div>
@@ -219,8 +219,8 @@ export function LandingPage({
               <div className="flex flex-wrap gap-4">
                 {[
                   { icon: CheckCircle, text: "100% Free", color: "text-green-600" },
-                  { icon: Heart, text: "Made for Zambians", color: "text-red-500" },
-                  { icon: Globe, text: "Curriculum Aligned", color: "text-blue-600" }
+                  { icon: Heart, text: "Made for Zambians", color: "text-orange-500" },
+                  { icon: Globe, text: "Curriculum Aligned", color: "text-emerald-600" }
                 ].map((item, index) => (
                   <div key={index} className="flex items-center space-x-2 bg-white/50 backdrop-blur-sm rounded-full px-3 py-1 shadow-md hover-lift">
                     <item.icon className={`h-4 w-4 ${item.color}`} />
