@@ -159,120 +159,147 @@ export function LandingPage({
         <div className="floating-icon absolute top-1/2 left-10 text-5xl opacity-20" style={{ color: 'var(--copper-light)' }}>🌟</div>
       </div>
 
-      {/* Dynamic Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center">
-        <div className="max-w-7xl mx-auto px-4 py-20">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+      {/* Compact Hero Section */}
+      <section className="relative py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-8 items-center">
             
-            {/* Left Column - Text Content */}
-            <div className={`space-y-8 ${isLoaded ? 'animate-slide-from-left' : 'opacity-0'}`}>
-              {/* Dynamic Logo */}
-              <div className="flex items-center mb-8">
-                <div className="header-zambian w-20 h-20 rounded-2xl flex items-center justify-center mr-4 shadow-2xl animate-glow-pulse">
-                  <GraduationCap className="h-12 w-12 text-white" />
+            {/* Compact Left Column - Text Content */}
+            <div className={`space-y-6 ${isLoaded ? 'animate-slide-from-left' : 'opacity-0'}`}>
+              {/* Compact Logo */}
+              <div className="flex items-center mb-4">
+                <div className="header-zambian w-16 h-16 rounded-xl flex items-center justify-center mr-3 shadow-xl animate-glow-pulse">
+                  <GraduationCap className="h-8 w-8 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-3xl md:text-4xl font-bold hero-title">
+                  <h1 className="text-2xl md:text-3xl font-bold hero-title">
                     SomaSmart EduHub
                   </h1>
-                  <p className="text-amber-700 font-medium">Zambia's Premier Learning Platform</p>
+                  <p className="text-amber-700 text-sm font-medium">Zambia's Premier Learning Platform</p>
                 </div>
               </div>
 
-              {/* Dynamic Headline */}
-              <div className="space-y-4">
-                <h2 className="text-6xl md:text-8xl font-black leading-none">
-                  <span className="block hero-title animate-slide-up">Learn.</span>
-                  <span className="block hero-title animate-slide-up" style={{ animationDelay: '0.2s' }}>Play.</span>
-                  <span className="block hero-title animate-slide-up" style={{ animationDelay: '0.4s' }}>Soar.</span>
+              {/* Compact Headline */}
+              <div className="space-y-2">
+                <h2 className="text-4xl md:text-6xl font-black leading-tight">
+                  <span className="block hero-title">Learn. Play. Soar.</span>
                 </h2>
-                
-                {/* Eagle Mascot Integration */}
-                <div className="relative">
-                  <ChisomoEagle 
-                    size="lg"
-                    mood="excited"
-                    message="Welcome to Zambia's most exciting learning adventure!"
-                    className="absolute -right-20 -top-10 hidden lg:block"
-                  />
-                </div>
               </div>
 
-              <p className={`text-xl md:text-2xl text-gray-700 leading-relaxed max-w-2xl ${isLoaded ? 'animate-slide-from-bottom' : 'opacity-0'}`} style={{ animationDelay: '0.6s' }}>
+              <p className="text-lg text-gray-700 leading-relaxed">
                 The first gamified learning platform designed specifically for Zambian high school students. 
-                Master your curriculum through interactive games, challenges, and social learning with 
+                Master your curriculum through interactive games and challenges with 
                 <span className="font-bold text-green-600"> Chisomo the Eagle</span> as your guide.
               </p>
 
-              {/* Enhanced CTA Buttons */}
-              <div className={`flex flex-col sm:flex-row gap-6 ${isLoaded ? 'animate-slide-from-bottom' : 'opacity-0'}`} style={{ animationDelay: '0.8s' }}>
+              {/* Compact CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4">
                 <Button
                   onClick={onGetStarted}
                   variant="zambian-primary"
                   size="lg"
-                  className="btn-magnetic px-10 py-5 text-lg font-bold rounded-2xl shadow-2xl"
+                  className="btn-magnetic px-8 py-3 text-base font-bold rounded-xl shadow-xl"
                 >
-                  <Rocket className="h-6 w-6 mr-3" />
+                  <Rocket className="h-5 w-5 mr-2" />
                   Start Your Journey
-                  <Sparkles className="h-5 w-5 ml-2" />
                 </Button>
                 
                 <Button
                   onClick={handleExploreArcadeClick}
                   variant="zambian-secondary"
                   size="lg"
-                  className="btn-magnetic px-10 py-5 text-lg font-bold rounded-2xl shadow-2xl"
+                  className="btn-magnetic px-8 py-3 text-base font-bold rounded-xl shadow-xl"
                 >
-                  <Gamepad2 className="h-6 w-6 mr-3" />
+                  <Gamepad2 className="h-5 w-5 mr-2" />
                   Game Arcade
-                  <Play className="h-5 w-5 ml-2" />
                 </Button>
               </div>
 
-              {/* Enhanced Trust Indicators */}
-              <div className={`flex flex-wrap gap-6 pt-8 ${isLoaded ? 'animate-slide-from-bottom' : 'opacity-0'}`} style={{ animationDelay: '1s' }}>
+              {/* Compact Trust Indicators */}
+              <div className="flex flex-wrap gap-4">
                 {[
-                  { icon: CheckCircle, text: "100% Free to Start", color: "text-green-600" },
+                  { icon: CheckCircle, text: "100% Free", color: "text-green-600" },
                   { icon: Heart, text: "Made for Zambians", color: "text-red-500" },
                   { icon: Globe, text: "Curriculum Aligned", color: "text-blue-600" }
                 ].map((item, index) => (
-                  <div key={index} className="flex items-center space-x-2 bg-white/50 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg hover-lift">
-                    <item.icon className={`h-5 w-5 ${item.color}`} />
-                    <span className="font-medium text-gray-800">{item.text}</span>
+                  <div key={index} className="flex items-center space-x-2 bg-white/50 backdrop-blur-sm rounded-full px-3 py-1 shadow-md hover-lift">
+                    <item.icon className={`h-4 w-4 ${item.color}`} />
+                    <span className="text-sm font-medium text-gray-800">{item.text}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Inline Stats */}
+              <div className="grid grid-cols-3 gap-4 pt-4">
+                {stats.slice(0,3).map((stat, index) => (
+                  <div key={index} className="text-center">
+                    <div className="text-xl md:text-2xl font-bold hero-title">
+                      {stat.number}
+                    </div>
+                    <div className="text-xs text-gray-600">{stat.label}</div>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Right Column - Interactive Visual */}
-            <div className={`relative ${isLoaded ? 'animate-slide-from-right' : 'opacity-0'}`} style={{ animationDelay: '0.3s' }}>
-              <div className="relative">
-                {/* 3D Card Grid */}
-                <div className="grid grid-cols-2 gap-6">
-                  {subjects.map((subject, index) => (
-                    <Card 
-                      key={subject.id}
-                      className={`card-3d hover-lift cursor-pointer animate-slide-from-bottom`}
-                      style={{ animationDelay: `${1.2 + index * 0.1}s` }}
-                      onClick={() => onExploreSubject(subject.id)}
-                    >
-                      <CardContent className="p-6 text-center">
-                        <div className={`w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br ${subject.color} flex items-center justify-center text-3xl shadow-lg`}>
-                          {subject.icon}
-                        </div>
-                        <h3 className="font-bold text-gray-900 mb-2 text-sm">{subject.name}</h3>
-                        <p className="text-xs text-gray-600">{subject.description}</p>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
+            {/* Content-Rich Right Column */}
+            <div className={`space-y-6 ${isLoaded ? 'animate-slide-from-right' : 'opacity-0'}`}>
+              {/* Interactive Subject Grid */}
+              <div className="grid grid-cols-2 gap-3">
+                {subjects.map((subject, index) => (
+                  <Card 
+                    key={subject.id}
+                    className="card-3d hover-lift cursor-pointer p-4"
+                    onClick={() => onExploreSubject(subject.id)}
+                  >
+                    <div className="text-center">
+                      <div className={`w-12 h-12 mx-auto mb-2 rounded-xl bg-gradient-to-br ${subject.color} flex items-center justify-center text-2xl shadow-md`}>
+                        {subject.icon}
+                      </div>
+                      <h3 className="font-bold text-gray-900 mb-1 text-sm">{subject.name}</h3>
+                      <p className="text-xs text-gray-600 leading-tight">{subject.description}</p>
+                    </div>
+                  </Card>
+                ))}
+              </div>
 
-                {/* Central Interactive Element */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="w-32 h-32 header-zambian rounded-full flex items-center justify-center shadow-2xl animate-float-complex">
-                    <Brain className="h-16 w-16 text-white" />
+              {/* Eagle Mascot with Quick Actions */}
+              <Card className="p-4 bg-gradient-to-br from-green-50 to-blue-50 border-green-200">
+                <div className="flex items-center space-x-3">
+                  <ChisomoEagle size="md" mood="happy" className="flex-shrink-0" />
+                  <div className="flex-1">
+                    <h4 className="font-bold text-gray-900 mb-1">Meet Chisomo!</h4>
+                    <p className="text-sm text-gray-600 mb-2">Your AI learning companion</p>
+                    <div className="flex gap-2">
+                      <Button size="sm" variant="outline" onClick={() => onNavigate('subjects')} className="text-xs">
+                        Start Learning
+                      </Button>
+                      <Button size="sm" variant="ghost" onClick={handleExploreArcadeClick} className="text-xs">
+                        Play Games
+                      </Button>
+                    </div>
                   </div>
                 </div>
+              </Card>
+
+              {/* Quick Features Preview */}
+              <div className="grid grid-cols-2 gap-3">
+                {features.slice(0,4).map((feature, index) => {
+                  const Icon = feature.icon;
+                  return (
+                    <div key={index} className="bg-white/70 backdrop-blur-sm rounded-lg p-3 hover-lift">
+                      <div className="flex items-center space-x-2">
+                        <div className={`w-8 h-8 ${feature.bg} rounded-lg flex items-center justify-center`}>
+                          <Icon className={`h-4 w-4 ${feature.color}`} />
+                        </div>
+                        <div>
+                          <h5 className="font-semibold text-gray-900 text-xs">{feature.title}</h5>
+                          <p className="text-xs text-gray-600">{feature.description.slice(0, 30)}...</p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
@@ -280,45 +307,42 @@ export function LandingPage({
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className={`py-16 bg-white/80 backdrop-blur-sm ${isLoaded ? 'animate-slide-from-bottom' : 'opacity-0'}`} style={{ animationDelay: '1.4s' }}>
+      {/* Compact Features & Stats Combined Section */}
+      <section className="py-12 bg-white/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {/* Inline Stats Bar */}
+          <div className="grid grid-cols-4 gap-4 mb-8 text-center">
             {stats.map((stat, index) => (
-              <div key={index} className="text-center hover-lift">
-                <div className="text-3xl md:text-4xl font-bold hero-title mb-2">
+              <div key={index} className="hover-lift">
+                <div className="text-2xl md:text-3xl font-bold hero-title">
                   {stat.number}
                 </div>
-                <div className="text-gray-600 font-medium">{stat.label}</div>
+                <div className="text-gray-600 text-sm font-medium">{stat.label}</div>
               </div>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* Features Section */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h3 className="text-3xl md:text-4xl font-bold hero-title mb-4">
+          {/* Compact Features Grid */}
+          <div className="text-center mb-8">
+            <h3 className="text-2xl md:text-3xl font-bold hero-title mb-2">
               Why Students Love SomaSmart EduHub
             </h3>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We've reimagined learning to be engaging, social, and effective for the modern Zambian student.
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Engaging, social, and effective learning for modern Zambian students.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {features.map((feature, index) => {
               const Icon = feature.icon;
               return (
-                <Card key={index} className="card-3d hover-lift text-center">
-                  <CardContent className="p-6">
-                    <div className={`w-16 h-16 ${feature.bg} rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg`}>
-                      <Icon className={`h-8 w-8 ${feature.color}`} />
+                <Card key={index} className="card-3d hover-lift">
+                  <CardContent className="p-4 text-center">
+                    <div className={`w-12 h-12 ${feature.bg} rounded-xl flex items-center justify-center mx-auto mb-3 shadow-md`}>
+                      <Icon className={`h-6 w-6 ${feature.color}`} />
                     </div>
-                    <h4 className="font-bold text-gray-900 mb-2">{feature.title}</h4>
-                    <p className="text-gray-600 text-sm">{feature.description}</p>
+                    <h4 className="font-bold text-gray-900 mb-2 text-sm">{feature.title}</h4>
+                    <p className="text-gray-600 text-xs leading-relaxed">{feature.description}</p>
                   </CardContent>
                 </Card>
               );
@@ -327,74 +351,143 @@ export function LandingPage({
         </div>
       </section>
 
-      {/* Enhanced Carousel Section */}
-      <section className="py-20 bg-gradient-to-br from-green-50/50 to-blue-50/50 backdrop-blur-sm">
-        <Carousel onExploreArcade={onExploreArcade} />
-      </section>
-
-      {/* Subjects Section */}
-      <section className="py-20">
+      {/* Compact Multi-Section Layout */}
+      <section className="py-12">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h3 className="text-3xl md:text-4xl font-bold hero-title mb-4">
-              Master All Your Subjects
-            </h3>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Interactive lessons and games across the complete Zambian high school curriculum.
-            </p>
+          {/* Two Column Layout: Carousel + Subjects */}
+          <div className="grid lg:grid-cols-2 gap-8 mb-12">
+            {/* Carousel Column */}
+            <div className="bg-gradient-to-br from-green-50/50 to-blue-50/50 rounded-2xl p-6">
+              <h3 className="text-xl font-bold hero-title mb-4 text-center">
+                Interactive Learning Journey
+              </h3>
+              <Carousel onExploreArcade={onExploreArcade} />
+            </div>
+
+            {/* Subjects Quick Access */}
+            <div className="space-y-4">
+              <h3 className="text-xl font-bold hero-title mb-4 text-center">
+                Master All Your Subjects
+              </h3>
+              <div className="grid grid-cols-2 gap-3">
+                {subjects.map((subject, index) => (
+                  <Card 
+                    key={subject.id} 
+                    className="card-3d hover-lift cursor-pointer"
+                    onClick={() => onExploreSubject(subject.id)}
+                  >
+                    <CardContent className="p-4 text-center">
+                      <div className={`w-12 h-12 bg-gradient-to-r ${subject.color} rounded-xl flex items-center justify-center mx-auto mb-2 text-xl shadow-md`}>
+                        {subject.icon}
+                      </div>
+                      <h4 className="font-bold text-gray-900 mb-1 text-sm">{subject.name}</h4>
+                      <p className="text-gray-600 text-xs mb-2 leading-tight">{subject.description}</p>
+                      <Button variant="outline" size="sm" className="w-full text-xs py-1">
+                        Explore
+                        <ChevronRight className="h-3 w-3 ml-1" />
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {subjects.map((subject, index) => (
-              <Card 
-                key={subject.id} 
-                className="card-3d hover-lift cursor-pointer"
-                onClick={() => onExploreSubject(subject.id)}
-              >
-                <CardContent className="p-6 text-center">
-                  <div className={`w-20 h-20 bg-gradient-to-r ${subject.color} rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl shadow-lg`}>
-                    {subject.icon}
-                  </div>
-                  <h4 className="font-bold text-gray-900 mb-2">{subject.name}</h4>
-                  <p className="text-gray-600 text-sm mb-4">{subject.description}</p>
-                  <Button variant="outline" size="sm" className="w-full">
-                    Explore Subject
-                    <ChevronRight className="h-4 w-4 ml-2" />
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
+          {/* Achievement Showcase */}
+          <div className="bg-gradient-to-r from-green-100 to-blue-100 rounded-2xl p-6">
+            <div className="text-center mb-6">
+              <h3 className="text-xl font-bold hero-title mb-2">Student Success Stories</h3>
+              <p className="text-gray-600">See what students are achieving with SomaSmart</p>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                { icon: Trophy, label: "Top Performers", count: "2,500+" },
+                { icon: Target, label: "Goals Achieved", count: "15,000+" },
+                { icon: Award, label: "Badges Earned", count: "50,000+" },
+                { icon: Users, label: "Study Groups", count: "1,200+" }
+              ].map((item, index) => (
+                <div key={index} className="bg-white/70 rounded-xl p-4 text-center hover-lift">
+                  <item.icon className="h-8 w-8 mx-auto mb-2 text-green-600" />
+                  <div className="font-bold text-lg hero-title">{item.count}</div>
+                  <div className="text-sm text-gray-600">{item.label}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 header-zambian">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h3 className="text-3xl md:text-4xl font-bold text-white mb-6 drop-shadow-lg">
-            Ready to Transform Your Learning Experience?
-          </h3>
-          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto drop-shadow">
-            Join thousands of Zambian students who are already excelling with SomaSmart EduHub.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              onClick={onGetStarted}
-              size="lg"
-              className="btn-magnetic bg-white text-green-600 hover:bg-gray-100 px-8 py-4 text-lg font-bold"
-            >
-              <UserPlus className="h-5 w-5 mr-2" />
-              Get Started Free
-            </Button>
-            <Button
-              onClick={() => setShowTestimonials(true)}
-              variant="outline"
-              size="lg"
-              className="btn-magnetic border-white text-white hover:bg-white hover:text-green-600 px-8 py-4 text-lg font-bold"
-            >
-              <Star className="h-5 w-5 mr-2" />
-              Student Stories
-            </Button>
+      {/* Compact CTA Section with Additional Content */}
+      <section className="py-12 header-zambian">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid lg:grid-cols-3 gap-8 items-center">
+            {/* Main CTA */}
+            <div className="lg:col-span-2 text-center lg:text-left">
+              <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 drop-shadow-lg">
+                Ready to Transform Your Learning Experience?
+              </h3>
+              <p className="text-white/90 mb-6 drop-shadow">
+                Join thousands of Zambian students who are already excelling with SomaSmart EduHub.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <Button
+                  onClick={onGetStarted}
+                  size="lg"
+                  className="btn-magnetic bg-white text-green-600 hover:bg-gray-100 px-6 py-3 font-bold"
+                >
+                  <UserPlus className="h-5 w-5 mr-2" />
+                  Get Started Free
+                </Button>
+                <Button
+                  onClick={() => setShowTestimonials(true)}
+                  variant="outline"
+                  size="lg"
+                  className="btn-magnetic border-white text-white hover:bg-white hover:text-green-600 px-6 py-3 font-bold"
+                >
+                  <Star className="h-5 w-5 mr-2" />
+                  Student Stories
+                </Button>
+              </div>
+            </div>
+
+            {/* Quick Access Menu */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
+              <h4 className="text-white font-bold mb-4 text-center">Quick Access</h4>
+              <div className="space-y-3">
+                <Button 
+                  onClick={() => onNavigate('subjects')} 
+                  variant="ghost" 
+                  className="w-full text-white hover:bg-white/20 justify-start"
+                >
+                  <BookOpen className="h-4 w-4 mr-2" />
+                  Browse Subjects
+                </Button>
+                <Button 
+                  onClick={handleExploreArcadeClick} 
+                  variant="ghost" 
+                  className="w-full text-white hover:bg-white/20 justify-start"
+                >
+                  <Gamepad2 className="h-4 w-4 mr-2" />
+                  Play Games
+                </Button>
+                <Button 
+                  onClick={() => onNavigate('challenges')} 
+                  variant="ghost" 
+                  className="w-full text-white hover:bg-white/20 justify-start"
+                >
+                  <Trophy className="h-4 w-4 mr-2" />
+                  Join Challenges
+                </Button>
+                <Button 
+                  onClick={onLogin} 
+                  variant="ghost" 
+                  className="w-full text-white hover:bg-white/20 justify-start"
+                >
+                  <Target className="h-4 w-4 mr-2" />
+                  Sign In
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
