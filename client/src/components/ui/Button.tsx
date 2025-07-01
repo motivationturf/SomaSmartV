@@ -2,7 +2,7 @@ import React from 'react';
 import { Loader2 } from 'lucide-react';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'zambian-primary' | 'zambian-secondary';
   size?: 'sm' | 'md' | 'lg';
   isLoading?: boolean;
   children: React.ReactNode;
@@ -23,7 +23,9 @@ export function Button({
     primary: 'bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white focus:ring-green-500 shadow-lg hover:shadow-xl',
     secondary: 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white focus:ring-blue-500 shadow-lg hover:shadow-xl',
     outline: 'border-2 border-gray-300 bg-white hover:bg-gray-50 text-gray-700 focus:ring-green-500 hover:border-green-500 hover:text-green-600 shadow-md hover:shadow-lg',
-    ghost: 'text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:ring-green-500 shadow-sm hover:shadow-md'
+    ghost: 'text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:ring-green-500 shadow-sm hover:shadow-md',
+    'zambian-primary': 'btn-zambian-primary',
+    'zambian-secondary': 'btn-zambian-secondary'
   };
   
   const sizeClasses = {

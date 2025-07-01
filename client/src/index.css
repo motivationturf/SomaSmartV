@@ -2,6 +2,252 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Zambian-themed color palette */
+:root {
+  /* Primary Zambian colors */
+  --zambian-green: #00a651;
+  --zambian-red: #de2910;
+  --zambian-orange: #ff7f00;
+  --zambian-copper: #b87333;
+  
+  /* Extended palette */
+  --emerald-light: #10b981;
+  --emerald-dark: #047857;
+  --sunset-orange: #f97316;
+  --sunset-red: #dc2626;
+  --copper-light: #d4af8c;
+  --copper-dark: #8b5a2b;
+  
+  /* Neutral colors */
+  --stone-50: #fafaf9;
+  --stone-100: #f5f5f4;
+  --stone-200: #e7e5e4;
+  --stone-800: #292524;
+  --stone-900: #1c1917;
+  
+  /* Eagle mascot colors */
+  --eagle-gold: #fbbf24;
+  --eagle-amber: #f59e0b;
+  --eagle-brown: #92400e;
+}
+
+/* Smooth animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-gentle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Gradient utilities */
+.gradient-zambian {
+  background: linear-gradient(135deg, var(--zambian-green) 0%, var(--emerald-light) 100%);
+}
+
+.gradient-sunset {
+  background: linear-gradient(135deg, var(--sunset-orange) 0%, var(--zambian-red) 100%);
+}
+
+.gradient-copper {
+  background: linear-gradient(135deg, var(--copper-light) 0%, var(--copper-dark) 100%);
+}
+
+.gradient-eagle {
+  background: linear-gradient(135deg, var(--eagle-gold) 0%, var(--eagle-amber) 100%);
+}
+
+/* Animation classes */
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-gentle {
+  animation: pulse-gentle 2s ease-in-out infinite;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.6s ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.6s ease-out;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.4s ease-out;
+}
+
+/* Eagle mascot styles */
+.eagle-mascot {
+  font-size: 3rem;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
+  transition: all 0.3s ease;
+}
+
+.eagle-mascot:hover {
+  transform: scale(1.1) rotate(5deg);
+  filter: drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.eagle-speech-bubble {
+  position: relative;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 2px solid var(--eagle-amber);
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.eagle-speech-bubble::before {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 20px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid var(--eagle-amber);
+}
+
+/* Enhanced card styles */
+.card-zambian {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-zambian:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Button enhancements */
+.btn-zambian-primary {
+  background: linear-gradient(135deg, var(--zambian-green) 0%, var(--emerald-light) 100%);
+  border: none;
+  color: white;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.btn-zambian-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+  background: linear-gradient(135deg, var(--emerald-dark) 0%, var(--zambian-green) 100%);
+}
+
+.btn-zambian-secondary {
+  background: linear-gradient(135deg, var(--sunset-orange) 0%, var(--zambian-red) 100%);
+  border: none;
+  color: white;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+}
+
+.btn-zambian-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(249, 115, 22, 0.4);
+}
+
+/* Progress bar styling */
+.progress-zambian {
+  background: linear-gradient(90deg, var(--zambian-green) 0%, var(--emerald-light) 50%, var(--eagle-gold) 100%);
+  border-radius: 9999px;
+  transition: all 0.5s ease;
+}
+
+/* Loading animations */
+.loading-spinner {
+  border: 3px solid rgba(16, 185, 129, 0.3);
+  border-radius: 50%;
+  border-top: 3px solid var(--zambian-green);
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Smooth page transitions */
+.page-transition {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page-transition.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Enhanced focus states */
+.focus-zambian:focus {
+  outline: none;
+  ring: 2px solid var(--zambian-green);
+  ring-opacity: 50%;
+  border-color: var(--zambian-green);
+}
+
+/* Glassmorphism effect */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
 /* 3D Effects and Enhanced Styling */
 @layer utilities {
   .perspective-1000 {

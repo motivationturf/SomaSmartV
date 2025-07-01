@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { Card, CardHeader, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
+import { ChisomoEagle } from '../mascot/ChisomoEagle';
 import { BrainBuster } from './games/BrainBuster';
 import { Flashcards } from './games/Flashcards';
 import { TimeChallenge } from './games/TimeChallenge';
@@ -140,7 +141,7 @@ export function GameArcade({ onNavigate, isGuest = false, onUpdateProgress }: Ga
       title: 'Brain Buster',
       description: 'Solo timed quiz to test your knowledge across all subjects',
       icon: Brain,
-      color: 'from-purple-500 to-pink-500',
+      color: 'from-green-600 via-emerald-500 to-amber-500', // Zambian flag colors
       difficulty: 'Medium',
       duration: '5-15 min',
       players: 'Solo',
@@ -152,7 +153,7 @@ export function GameArcade({ onNavigate, isGuest = false, onUpdateProgress }: Ga
       title: 'Flashcards',
       description: 'Flip cards to reinforce key concepts and definitions',
       icon: Shuffle,
-      color: 'from-blue-500 to-cyan-500',
+      color: 'from-amber-500 via-orange-500 to-red-500', // Zambian sunset
       difficulty: 'Easy',
       duration: '10-20 min',
       players: 'Solo',
@@ -164,7 +165,7 @@ export function GameArcade({ onNavigate, isGuest = false, onUpdateProgress }: Ga
       title: 'Time Challenge',
       description: 'Rapid-fire quiz with 60 seconds to answer as many as possible',
       icon: Timer,
-      color: 'from-red-500 to-orange-500',
+      color: 'from-red-600 via-orange-500 to-yellow-500', // Fire colors
       difficulty: 'Hard',
       duration: '1-2 min',
       players: 'Solo',
@@ -176,7 +177,7 @@ export function GameArcade({ onNavigate, isGuest = false, onUpdateProgress }: Ga
       title: 'Jumble Master',
       description: 'Unscramble words, formulas, and definitions',
       icon: Zap,
-      color: 'from-green-500 to-emerald-500',
+      color: 'from-emerald-600 via-green-500 to-teal-500', // Forest green
       difficulty: 'Medium',
       duration: '5-10 min',
       players: 'Solo',
@@ -188,7 +189,7 @@ export function GameArcade({ onNavigate, isGuest = false, onUpdateProgress }: Ga
       title: 'Class Challenge',
       description: 'Multiplayer game for teacher-created challenges',
       icon: Users,
-      color: 'from-indigo-500 to-purple-500',
+      color: 'from-purple-600 via-indigo-500 to-blue-500', // Royal colors
       difficulty: 'Variable',
       duration: '10-30 min',
       players: 'Multiplayer',
@@ -259,34 +260,36 @@ export function GameArcade({ onNavigate, isGuest = false, onUpdateProgress }: Ga
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-8 animate-slide-up">
         <Button 
           variant="ghost" 
           onClick={() => onNavigate('dashboard')}
-          className="mb-4"
+          className="mb-6 hover:bg-green-50"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
           Back to Dashboard
         </Button>
         
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center mb-4">
-            <div className="w-16 h-16 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-2xl flex items-center justify-center">
-              <Gamepad2 className="h-8 w-8 text-white" />
+          <div className="flex items-center justify-center mb-6">
+            <div className="gradient-eagle w-20 h-20 rounded-2xl flex items-center justify-center shadow-lg animate-float">
+              <Gamepad2 className="h-10 w-10 text-white" />
             </div>
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Game Arcade</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-green-600 via-emerald-500 to-amber-500 bg-clip-text text-transparent mb-4">
+            Game Arcade
+          </h1>
+          <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
             Learn through play! Choose from our collection of educational games designed to make studying fun and engaging.
           </p>
           
           {isGuest && (
-            <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-2xl mx-auto">
-              <div className="flex items-center justify-center space-x-2 text-blue-800">
-                <Target className="h-5 w-5" />
-                <span className="font-medium">Guest Mode: Try 3 sample games</span>
+            <div className="mt-6 glass-effect rounded-xl p-6 max-w-2xl mx-auto border border-amber-200 animate-scale-in">
+              <div className="flex items-center justify-center space-x-2 text-amber-800">
+                <Target className="h-6 w-6" />
+                <span className="font-semibold text-lg">Guest Mode: Try 3 sample games</span>
               </div>
-              <p className="text-blue-700 text-sm mt-1">
+              <p className="text-amber-700 mt-2">
                 Create an account to unlock all games and save your high scores!
               </p>
             </div>
@@ -294,36 +297,58 @@ export function GameArcade({ onNavigate, isGuest = false, onUpdateProgress }: Ga
         </div>
       </div>
 
-      {/* Eagle Mascot Introduction */}
-      <Card className="mb-8 bg-gradient-to-r from-amber-50 to-orange-50 border-amber-200">
-        <CardContent className="p-6">
-          <div className="flex items-center space-x-4">
-            <div className="text-6xl">🦅</div>
+      {/* Enhanced Eagle Mascot Introduction */}
+      <Card className="mb-8 bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 border border-amber-300 shadow-xl animate-slide-up" style={{ animationDelay: '0.2s' }}>
+        <CardContent className="p-8">
+          <div className="flex items-center space-x-6">
+            <div className="relative">
+              <ChisomoEagle 
+                size="lg" 
+                mood="excited" 
+                showBubble={false}
+                animated={true}
+                className="transform hover:scale-110 transition-transform duration-300"
+              />
+              <div className="absolute -top-2 -right-2 animate-bounce">
+                <div className="w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center">
+                  <Star className="h-3 w-3 text-yellow-800" />
+                </div>
+              </div>
+            </div>
             <div className="flex-1">
-              <h3 className="text-xl font-bold text-amber-900 mb-2">Meet Chisomo the Eagle!</h3>
-              <p className="text-amber-800">
-                Your learning companion will guide you through each game with helpful tips, concept nuggets, and encouragement. 
-                The eagle represents wisdom and soaring to new heights - just like your academic journey!
+              <h3 className="text-2xl font-bold bg-gradient-to-r from-amber-800 to-orange-700 bg-clip-text text-transparent mb-3">
+                Meet Chisomo the Eagle!
+              </h3>
+              <p className="text-amber-800 text-lg leading-relaxed">
+                Your wise learning companion will guide you through each game with helpful tips, concept nuggets, and encouragement. 
+                The eagle represents wisdom and soaring to new heights - just like your academic journey in Zambia!
               </p>
+              <div className="mt-4 flex items-center space-x-2">
+                <Trophy className="h-5 w-5 text-amber-600" />
+                <span className="text-amber-700 font-medium">Ready to soar to new learning heights?</span>
+              </div>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Game Grid */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        {games.map((game) => {
+      {/* Enhanced Game Grid */}
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+        {games.map((game, index) => {
           const Icon = game.icon;
           const isLocked = isGuest && !game.guestAllowed;
           
           return (
             <Card 
               key={game.id} 
-              className={`transition-all duration-300 relative overflow-hidden ${
-                isLocked 
+              className={`
+                group relative overflow-hidden animate-slide-up
+                ${isLocked 
                   ? 'opacity-75 cursor-not-allowed' 
-                  : 'hover:shadow-xl hover:-translate-y-2 cursor-pointer'
-              }`}
+                  : 'cursor-pointer hover:shadow-2xl'
+                }
+              `}
+              style={{ animationDelay: `${index * 0.1}s` }}
               onClick={() => !isLocked && handleGameSelect(game.id)}
             >
               {isLocked && (
@@ -336,17 +361,26 @@ export function GameArcade({ onNavigate, isGuest = false, onUpdateProgress }: Ga
                 </div>
               )}
               
-              {/* Game Header */}
-              <div className={`bg-gradient-to-r ${game.color} p-6 text-white`}>
-                <div className="flex items-center justify-between mb-4">
-                  <Icon className="h-8 w-8" />
-                  <div className="text-right">
-                    <div className="text-xs opacity-80">{game.players}</div>
-                    <div className="text-sm font-medium">{game.duration}</div>
+              {/* Enhanced Game Header with Zambian Theme */}
+              <div className={`bg-gradient-to-br ${game.color} p-6 text-white relative overflow-hidden`}>
+                <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -translate-y-4 translate-x-4"></div>
+                <div className="absolute bottom-0 left-0 w-16 h-16 bg-white/5 rounded-full translate-y-4 -translate-x-4"></div>
+                
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                      <Icon className="h-8 w-8 group-hover:scale-110 transition-transform duration-300" />
+                    </div>
+                    <div className="text-right">
+                      <div className="text-xs opacity-90 font-medium">{game.players}</div>
+                      <div className="text-sm font-bold">{game.duration}</div>
+                    </div>
                   </div>
+                  <h3 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform duration-300">
+                    {game.title}
+                  </h3>
+                  <p className="text-white/95 text-sm leading-relaxed">{game.description}</p>
                 </div>
-                <h3 className="text-xl font-bold mb-2">{game.title}</h3>
-                <p className="text-white/90 text-sm">{game.description}</p>
               </div>
 
               <CardContent className="p-6">
