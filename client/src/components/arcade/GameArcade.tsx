@@ -101,7 +101,14 @@ function SubjectSelectionModal({ gameId, onSubjectSelect, onClose }: SubjectSele
                 </div>
                 <CardContent className="p-4">
                   <p className="text-gray-600 text-sm">{subject.description}</p>
-                  <Button className="w-full mt-3" size="sm">
+                  <Button 
+                    className="w-full mt-3" 
+                    size="sm"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onSubjectSelect(subject.id);
+                    }}
+                  >
                     <Play className="h-4 w-4 mr-2" />
                     Play with {subject.name}
                   </Button>
