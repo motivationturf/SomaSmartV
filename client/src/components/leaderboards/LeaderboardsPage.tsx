@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Trophy, Medal, Crown, Star, TrendingUp, Users, Lock, UserPlus } from 'lucide-react';
 import { Card, CardHeader, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
+import { UserContext } from '../../context/UserContext';
+import { AppLayout } from '../layout/AppLayout';
 
-interface LeaderboardsPageProps {
-  user: any;
-  isGuest?: boolean;
-}
-
-export function LeaderboardsPage({ user, isGuest = false }: LeaderboardsPageProps) {
+export function LeaderboardsPage() {
+  const { user } = useContext(UserContext) as any;
+  const isGuest = !user;
   const [activeTab, setActiveTab] = useState<'overall' | 'mathematics' | 'sciences' | 'computer-studies' | 'religious-education'>('overall');
   const [timeFrame, setTimeFrame] = useState<'week' | 'month' | 'all-time'>('week');
 
@@ -67,6 +66,7 @@ export function LeaderboardsPage({ user, isGuest = false }: LeaderboardsPageProp
 
   if (isGuest) {
     return (
+      <AppLayout>
       <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-4">Leaderboards</h1>
@@ -76,54 +76,29 @@ export function LeaderboardsPage({ user, isGuest = false }: LeaderboardsPageProp
         </div>
 
         {/* Guest Access Message */}
-        <div className="text-center py-12">
-          <div className="max-w-md mx-auto">
-            <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Lock className="h-10 w-10 text-blue-600" />
-            </div>
-            
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Join the Competition!</h2>
-            <p className="text-gray-600 mb-6">
-              Create an account to compete with classmates, track your progress, and climb the leaderboards.
-            </p>
-            
-            <div className="bg-gradient-to-r from-blue-50 to-green-50 border border-blue-200 rounded-lg p-6 mb-6">
-              <h3 className="font-semibold text-gray-900 mb-3">What you'll get:</h3>
-              <div className="space-y-2 text-sm text-gray-700">
-                <div className="flex items-center space-x-2">
-                  <Trophy className="h-4 w-4 text-yellow-500" />
-                  <span>Compete for top rankings</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Star className="h-4 w-4 text-blue-500" />
-                  <span>Earn points and achievements</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Users className="h-4 w-4 text-green-500" />
-                  <span>Connect with classmates</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <TrendingUp className="h-4 w-4 text-purple-500" />
-                  <span>Track your learning progress</span>
-                </div>
+          <div className="mb-6 bg-gradient-to-r from-blue-50 to-green-50 border border-blue-200 rounded-lg p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="font-medium text-blue-900">Guest Mode - View Sample Leaderboards</h3>
+                <p className="text-sm text-blue-700">Experience our leaderboard system. Create an account to participate and track your rankings.</p>
               </div>
-            </div>
-            
             <Button
               onClick={handleUpgrade}
-              size="lg"
-              className="px-8"
+                size="sm"
+                className="bg-blue-600 hover:bg-blue-700"
             >
-              <UserPlus className="h-5 w-5 mr-2" />
-              Create Free Account
+                <UserPlus className="h-4 w-4 mr-2" />
+                Create Account
             </Button>
           </div>
         </div>
       </div>
+    </AppLayout>
     );
   }
 
   return (
+    <AppLayout>
     <div className="max-w-7xl mx-auto px-4 py-6">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-4">Leaderboards</h1>
@@ -322,5 +297,6 @@ export function LeaderboardsPage({ user, isGuest = false }: LeaderboardsPageProp
         </CardContent>
       </Card>
     </div>
+    </AppLayout>
   );
 }

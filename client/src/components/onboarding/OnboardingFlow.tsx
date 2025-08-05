@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AvatarSelection } from './AvatarSelection';
 import { SubjectSelection } from './SubjectSelection';
 import { LearningGoals } from './LearningGoals';
 import { WelcomeComplete } from './WelcomeComplete';
+import { trackEvent } from '../../utils/analytics';
 
 interface OnboardingFlowProps {
   onComplete: (data: OnboardingData) => void;
@@ -21,6 +22,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
     subjects: [],
     learningGoals: []
   });
+  const [showMathTips, setShowMathTips] = useState(false);
 
   const updateData = (update: Partial<OnboardingData>) => {
     setOnboardingData(prev => ({ ...prev, ...update }));
@@ -40,13 +42,27 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
     }
   };
 
+  const handleStepComplete = (stepId: string) => {
+    trackEvent('onboarding_step_completed', { step: stepId });
+  };
+
+  // Branching: Show math tips if user selects Math
+  useEffect(() => {
+    if (onboardingData.subjects.includes('mathematics')) {
+      setShowMathTips(true);
+    } else {
+      setShowMathTips(false);
+    }
+  }, [onboardingData.subjects]);
+
   const steps = [
     {
       component: AvatarSelection,
       props: {
         selectedAvatar: onboardingData.avatar,
         onSelect: (avatar: string) => updateData({ avatar }),
-        onNext: nextStep
+        onNext: nextStep,
+        onComplete: () => handleStepComplete('avatar_selection')
       }
     },
     {
@@ -55,7 +71,8 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
         selectedSubjects: onboardingData.subjects,
         onSelect: (subjects: string[]) => updateData({ subjects }),
         onNext: nextStep,
-        onBack: prevStep
+        onBack: prevStep,
+        onComplete: () => handleStepComplete('subject_selection')
       }
     },
     {
@@ -64,9 +81,27 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
         selectedGoals: onboardingData.learningGoals,
         onSelect: (learningGoals: string[]) => updateData({ learningGoals }),
         onNext: nextStep,
-        onBack: prevStep
+        onBack: prevStep,
+        onComplete: () => handleStepComplete('learning_goals')
       }
     },
+    ...(showMathTips
+      ? [{
+          component: () => (
+            <div className="p-6 text-center">
+              <h2 className="text-xl font-bold mb-2">Math Power Tips</h2>
+              <p className="mb-4">You chose Mathematics! Did you know you can unlock special math challenges and badges?</p>
+              <button
+                className="bg-blue-600 text-white px-4 py-2 rounded"
+                onClick={nextStep}
+              >
+                Continue
+              </button>
+            </div>
+          ),
+          props: {}
+        }]
+      : []),
     {
       component: WelcomeComplete,
       props: {

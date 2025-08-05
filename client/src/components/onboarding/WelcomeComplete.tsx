@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from '../ui/Button';
 import { Sparkles, Trophy, Target } from 'lucide-react';
+import { Mascot } from '../mascot';
 
 interface WelcomeCompleteProps {
   onComplete: () => void;
@@ -10,8 +11,8 @@ export function WelcomeComplete({ onComplete }: WelcomeCompleteProps) {
   return (
     <div className="text-center max-w-2xl mx-auto">
       <div className="mb-8">
-        <div className="mx-auto w-24 h-24 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center mb-6">
-          <Sparkles className="h-12 w-12 text-white" />
+        <div className="mx-auto mb-6">
+          <Mascot size="lg" mood="excited" showBubble={false} />
         </div>
         
         <h2 className="text-4xl font-bold text-gray-900 mb-4">

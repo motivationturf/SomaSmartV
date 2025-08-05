@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { 
   Home, 
   BookOpen, 
@@ -14,28 +14,39 @@ import {
   Lock,
   Gamepad2,
   GraduationCap,
-  LogOut
+  LogOut,
+  Brain,
+  Bell
 } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { UserContext } from '../../context/UserContext';
+import { useNavigate } from 'react-router-dom';
+import type { User, NavigationItem } from '../../types';
 
 interface NavigationProps {
   currentView: string;
   onNavigate: (view: string) => void;
-  user: any;
+  user: User | null;
   isGuest?: boolean;
   onLogout?: () => void;
 }
 
 export function Navigation({ currentView, onNavigate, user, isGuest = false, onLogout }: NavigationProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user: contextUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  // Mock unread count for notifications
+  const unreadCount = contextUser?.role === 'pupil' ? 1 : 0;
 
   const navigationItems = [
     { id: 'dashboard', label: 'Home', icon: Home, guestAllowed: true },
     { id: 'subjects', label: 'Subjects', icon: BookOpen, guestAllowed: true },
     { id: 'arcade', label: 'Game Arcade', icon: Gamepad2, guestAllowed: true },
+    { id: 'ai-hub', label: 'AI Hub', icon: Brain, guestAllowed: true },
     { id: 'challenges', label: 'Challenges', icon: Target, guestAllowed: true },
-    { id: 'leaderboards', label: 'Leaderboards', icon: Trophy, guestAllowed: false },
-    { id: 'forum', label: 'Forum', icon: MessageSquare, guestAllowed: false },
+    { id: 'leaderboards', label: 'Leaderboards', icon: Trophy, guestAllowed: true },
+    { id: 'forum', label: 'Forum', icon: MessageSquare, guestAllowed: true },
     { id: 'profile', label: 'Profile', icon: User, guestAllowed: false }
   ];
 
@@ -47,11 +58,11 @@ export function Navigation({ currentView, onNavigate, user, isGuest = false, onL
     onNavigate('landing');
   };
 
-  const NavItem = ({ item, isMobile = false }: { item: any; isMobile?: boolean }) => {
+  const NavItem = ({ item, isMobile = false }: { item: NavigationItem; isMobile?: boolean }) => {
     const Icon = item.icon;
     const isActive = currentView === item.id || (currentView === 'guest-dashboard' && item.id === 'dashboard');
     const isLocked = isGuest && !item.guestAllowed;
-    
+    const isDashboard = item.id === 'dashboard';
     return (
       <button
         onClick={() => {
@@ -65,10 +76,12 @@ export function Navigation({ currentView, onNavigate, user, isGuest = false, onL
         className={`
           flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 relative
           ${isActive 
-            ? 'bg-green-600 text-white shadow-md' 
+            ? 'bg-green-600 text-white shadow-md hover:bg-gradient-to-r hover:from-blue-600 hover:to-orange-500'
             : isLocked
               ? 'text-gray-400 hover:text-gray-500 hover:bg-gray-50'
-              : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+              : isMobile
+                ? 'text-gray-800 hover:bg-gradient-to-r hover:from-blue-600 hover:to-orange-500'
+                : 'text-white hover:bg-gradient-to-r hover:from-blue-600 hover:to-orange-500'
           }
           ${isMobile ? 'w-full justify-start' : ''}
         `}
@@ -96,7 +109,7 @@ export function Navigation({ currentView, onNavigate, user, isGuest = false, onL
               className="flex items-center space-x-3 hover:scale-105 transition-all duration-300 group"
             >
               <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                <GraduationCap className="h-6 w-6 text-white" />
+                <img src="/logo.svg" alt="SomaSmart Logo" className="h-8 w-8" />
               </div>
               <h1 className="text-xl font-bold text-white drop-shadow-lg group-hover:scale-105 transition-transform duration-300">
                 SomaSmart EduHub
@@ -121,22 +134,22 @@ export function Navigation({ currentView, onNavigate, user, isGuest = false, onL
                 <Button
                   onClick={handleUpgrade}
                   size="sm"
-                  className="bg-green-600 hover:bg-green-700"
+                  className="bg-green-600 hover:bg-green-700 text-white"
                 >
-                  <UserPlus className="h-4 w-4 mr-2" />
+                  <UserPlus className="h-4 w-4 mr-2 text-white" />
                   Create Account
                 </Button>
               ) : (
                 <>
                   <div className="text-right">
-                    <p className="text-sm font-medium text-gray-900">
-                      {user?.firstName} {user?.lastName}
+                    <p className="text-sm font-medium text-white">
+                      {contextUser?.firstName} {contextUser?.lastName}
                     </p>
-                    <p className="text-xs text-gray-600">Grade {user?.grade}</p>
+                    <p className="text-xs text-white/80">{contextUser?.grade === '8' ? 'FORM1' : `Grade ${contextUser?.grade}`}</p>
                   </div>
                   <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center">
                     <span className="text-white text-sm font-semibold">
-                      {user?.firstName?.[0]}{user?.lastName?.[0]}
+                      {contextUser?.firstName?.[0]}{contextUser?.lastName?.[0]}
                     </span>
                   </div>
                   {onLogout && (
@@ -144,10 +157,22 @@ export function Navigation({ currentView, onNavigate, user, isGuest = false, onL
                       onClick={onLogout}
                       variant="ghost"
                       size="sm"
-                      className="text-gray-600 hover:text-red-600"
+                      className="text-white hover:text-red-200"
                     >
-                      <LogOut className="h-4 w-4" />
+                      <LogOut className="h-4 w-4 text-white" />
                     </Button>
+                  )}
+                  {contextUser?.role === 'pupil' && (
+                    <button
+                      onClick={() => navigate('/student/inbox')}
+                      className="relative focus:outline-none"
+                      aria-label="Notifications"
+                    >
+                      <Bell className="h-5 w-5 text-white" />
+                      {unreadCount > 0 && (
+                        <span className="absolute -top-1 -right-1 bg-red-600 text-white rounded-full text-xs px-1.5 py-0.5">{unreadCount}</span>
+                      )}
+                    </button>
                   )}
                 </>
               )}
@@ -166,7 +191,7 @@ export function Navigation({ currentView, onNavigate, user, isGuest = false, onL
               className="flex items-center space-x-3 hover:opacity-80 transition-opacity duration-200 group"
             >
               <div className="w-8 h-8 bg-gradient-to-r from-green-600 to-blue-600 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
-                <GraduationCap className="h-5 w-5 text-white" />
+                <img src="/logo.svg" alt="SomaSmart Logo" className="h-6 w-6" />
               </div>
               <div>
                 <h1 className="text-lg font-bold text-gray-900 group-hover:text-green-600 transition-colors duration-200">
@@ -209,14 +234,14 @@ export function Navigation({ currentView, onNavigate, user, isGuest = false, onL
                       <div className="flex items-center space-x-3 px-3 py-2">
                         <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center">
                           <span className="text-white text-sm font-semibold">
-                            {user?.firstName?.[0]}{user?.lastName?.[0]}
+                            {contextUser?.firstName?.[0]}{contextUser?.lastName?.[0]}
                           </span>
                         </div>
                         <div>
                           <p className="text-sm font-medium text-gray-900">
-                            {user?.firstName} {user?.lastName}
+                            {contextUser?.firstName} {contextUser?.lastName}
                           </p>
-                          <p className="text-xs text-gray-600">Grade {user?.grade}</p>
+                          <p className="text-xs text-gray-600">{contextUser?.grade === '8' ? 'FORM1' : `Grade ${contextUser?.grade}`}</p>
                         </div>
                       </div>
                       {onLogout && (
@@ -229,6 +254,15 @@ export function Navigation({ currentView, onNavigate, user, isGuest = false, onL
                         >
                           <LogOut className="h-5 w-5" />
                           <span>Sign Out</span>
+                        </button>
+                      )}
+                      {contextUser?.role === 'pupil' && (
+                        <button
+                          onClick={() => navigate('/student/inbox')}
+                          className="w-full flex items-center space-x-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg font-medium"
+                        >
+                          <Bell className="h-5 w-5" />
+                          <span>Inbox</span>
                         </button>
                       )}
                     </div>

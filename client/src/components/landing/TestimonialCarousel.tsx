@@ -40,7 +40,7 @@ export default function TestimonialCarousel({ onClose }: TestimonialCarouselProp
         onClick={onClose}
         title="Close"
       >
-        <X className="h-5 w-5 text-gray-400" />
+        <X className="h-5 w-5 text-gray-600" />
       </button>
       <div className="flex justify-center mb-4">
         <span className="bg-green-100 rounded-full p-2">

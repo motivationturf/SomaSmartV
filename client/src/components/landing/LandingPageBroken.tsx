@@ -23,9 +23,9 @@ import {
 } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Card, CardContent } from '../ui/Card';
-import { ChisomoEagle } from '../mascot/ChisomoEagle';
 import { Carousel } from './Carousel';
 import TestimonialCarousel from './TestimonialCarousel';
+import Logo from '../ui/Logo';
 
 interface LandingPageProps {
   onGetStarted: () => void;
@@ -171,7 +171,7 @@ export function LandingPage({
               {/* Dynamic Logo */}
               <div className="flex items-center mb-8">
                 <div className="header-zambian w-20 h-20 rounded-2xl flex items-center justify-center mr-4 shadow-2xl animate-glow-pulse">
-                  <GraduationCap className="h-12 w-12 text-white" />
+                  <Logo className="h-12 w-12" />
                 </div>
                 <div>
                   <h1 className="text-3xl md:text-4xl font-bold hero-title">
@@ -191,12 +191,7 @@ export function LandingPage({
                 
                 {/* Eagle Mascot Integration */}
                 <div className="relative">
-                  <ChisomoEagle 
-                    size="lg"
-                    mood="excited"
-                    message="Welcome to Zambia's most exciting learning adventure!"
-                    className="absolute -right-20 -top-10 hidden lg:block"
-                  />
+                  <Logo className="h-32 w-32" />
                 </div>
               </div>
 
@@ -419,11 +414,9 @@ export function LandingPage({
               >
                 <X className="h-6 w-6" />
               </button>
-              
               <div className="w-16 h-16 bg-gradient-to-r from-green-600 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <Gamepad2 className="h-8 w-8 text-white" />
               </div>
-              
               <h3 className="text-2xl font-bold text-gray-900 mb-2">
                 Access Game Arcade
               </h3>
@@ -431,126 +424,6 @@ export function LandingPage({
                 Choose how you'd like to access our learning games
               </p>
             </div>
-
-      {/* Interactive Carousel Section */}
-      <section className="py-20 bg-white">
-        <Carousel onExploreArcade={handleExploreArcadeClick} />
-      </section>
-
-      {/* Subjects Preview */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Master Your Curriculum
-            </h3>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Comprehensive coverage of all major subjects with interactive lessons, games, and assessments.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {subjects.map((subject, index) => (
-              <Card 
-                key={subject.id} 
-                className="overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer"
-                onClick={() => onExploreSubject(subject.id)}
-              >
-                <div className={`bg-gradient-to-r ${subject.color} p-6 text-white`}>
-                  <div className="text-4xl mb-4">{subject.icon}</div>
-                  <h4 className="text-xl font-bold mb-2">{subject.name}</h4>
-                </div>
-                <CardContent className="p-6">
-                  <p className="text-gray-600 mb-4">{subject.description}</p>
-                  <Button variant="outline" className="w-full">
-                    Explore Subject
-                    <ChevronRight className="h-4 w-4 ml-2" />
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Social Proof */}
-      <section className="py-20 bg-gradient-to-r from-green-600 to-blue-600 text-white">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <h3 className="text-3xl md:text-4xl font-bold mb-8">
-            Trusted by Students Across Zambia
-          </h3>
-          <p className="text-xl text-green-100 mb-8 max-w-3xl mx-auto">
-            From Lusaka to Livingstone, students are achieving better results with our gamified learning approach.
-          </p>
-          
-          <Button
-            onClick={() => setShowTestimonials(true)}
-            variant="outline"
-            size="lg"
-            className="border-white text-white hover:bg-white hover:text-green-600"
-          >
-            <Star className="h-5 w-5 mr-2" />
-            Read Student Stories
-          </Button>
-        </div>
-      </section>
-
-      {/* Final CTA */}
-      <section className="py-20">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            Ready to Transform Your Learning?
-          </h3>
-          <p className="text-xl text-gray-600 mb-8">
-            Join thousands of Zambian students who are already excelling with SomaSmart EduHub.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              onClick={onGetStarted}
-              size="lg"
-              className="px-8 py-4 text-lg"
-            >
-              <UserPlus className="h-5 w-5 mr-2" />
-              Create Free Account
-            </Button>
-            
-            <Button
-              onClick={onLogin}
-              variant="outline"
-              size="lg"
-              className="px-8 py-4 text-lg"
-            >
-              Sign In
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Modal */}
-      {showTestimonials && (
-        <TestimonialCarousel onClose={() => setShowTestimonials(false)} />
-      )}
-
-      {/* Arcade Access Modal */}
-      {showArcadeModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 relative">
-            <button
-              onClick={() => setShowArcadeModal(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
-            >
-              <X className="h-6 w-6" />
-            </button>
-            
-            <div className="text-center mb-6">
-              <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Gamepad2 className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Access Game Arcade</h3>
-              <p className="text-gray-600">Choose how you'd like to access our educational games</p>
-            </div>
-
             <div className="space-y-3">
               <Button
                 onClick={() => handleArcadeAccess('signup')}
@@ -559,7 +432,6 @@ export function LandingPage({
                 <Star className="h-4 w-4 mr-2" />
                 Sign Up & Play (Recommended)
               </Button>
-              
               <Button
                 onClick={() => handleArcadeAccess('login')}
                 variant="outline"
@@ -568,7 +440,6 @@ export function LandingPage({
                 <UserPlus className="h-4 w-4 mr-2" />
                 Sign In to Continue
               </Button>
-              
               <Button
                 onClick={() => handleArcadeAccess('guest')}
                 variant="ghost"
@@ -578,7 +449,6 @@ export function LandingPage({
                 Try as Guest (Limited Access)
               </Button>
             </div>
-            
             <p className="text-xs text-gray-500 text-center mt-4">
               Guest mode includes 3 sample games. Create an account for full access!
             </p>

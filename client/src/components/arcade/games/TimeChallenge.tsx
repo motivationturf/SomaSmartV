@@ -12,6 +12,11 @@ import {
 } from 'lucide-react';
 import { Card, CardHeader, CardContent } from '../../ui/Card';
 import { Button } from '../../ui/Button';
+import mathematicsTimeChallenge from '../questions/TimeChallenge/MathematicsTimeChallenge';
+import computerStudiesTimeChallenge from '../questions/TimeChallenge/ComputerStudiesTimeChallenge';
+import scienceTimeChallenge from '../questions/TimeChallenge/ScienceTimeChallenge';
+import religiousEducationTimeChallenge from '../questions/TimeChallenge/ReligiousEducationTimeChallenge';
+import Logo from '../../ui/Logo';
 
 interface TimeChallengeProps {
   config: {
@@ -35,74 +40,10 @@ export function TimeChallenge({ config, onBack, isGuest = false, onUpdateProgres
 
   // Subject-specific quick-fire questions
   const questionSets = {
-    mathematics: [
-      { q: "7 × 8 = ?", options: ["54", "56", "58", "60"], correct: 1 },
-      { q: "√64 = ?", options: ["6", "7", "8", "9"], correct: 2 },
-      { q: "15% of 200 = ?", options: ["25", "30", "35", "40"], correct: 1 },
-      { q: "180° - 45° = ?", options: ["125°", "135°", "145°", "155°"], correct: 1 },
-      { q: "2³ = ?", options: ["6", "8", "9", "12"], correct: 1 },
-      { q: "π ≈ ?", options: ["3.14", "3.41", "4.13", "4.31"], correct: 0 },
-      { q: "5! = ?", options: ["25", "60", "120", "125"], correct: 2 },
-      { q: "sin(90°) = ?", options: ["0", "0.5", "1", "√2"], correct: 2 },
-      { q: "log₁₀(100) = ?", options: ["1", "2", "10", "100"], correct: 1 },
-      { q: "Area of circle r=3", options: ["6π", "9π", "12π", "18π"], correct: 1 },
-      { q: "12 ÷ 4 = ?", options: ["2", "3", "4", "6"], correct: 1 },
-      { q: "25% of 80 = ?", options: ["15", "20", "25", "30"], correct: 1 },
-      { q: "3² + 4² = ?", options: ["25", "24", "23", "26"], correct: 0 },
-      { q: "60 ÷ 12 = ?", options: ["4", "5", "6", "7"], correct: 1 },
-      { q: "9 × 6 = ?", options: ["52", "54", "56", "58"], correct: 1 }
-    ],
-    'computer-studies': [
-      { q: "Binary 1010 = ?", options: ["8", "10", "12", "14"], correct: 1 },
-      { q: "HTML tag for link?", options: ["<link>", "<a>", "<url>", "<href>"], correct: 1 },
-      { q: "CSS for red text?", options: ["color:red", "text:red", "font:red", "style:red"], correct: 0 },
-      { q: "Python print syntax?", options: ["echo()", "print()", "write()", "output()"], correct: 1 },
-      { q: "1 byte = ? bits", options: ["4", "6", "8", "10"], correct: 2 },
-      { q: "TCP port for HTTP?", options: ["21", "25", "80", "443"], correct: 2 },
-      { q: "SQL SELECT all?", options: ["*", "ALL", "EVERY", "%"], correct: 0 },
-      { q: "JavaScript variable?", options: ["var", "variable", "let", "both A&C"], correct: 3 },
-      { q: "IP address format?", options: ["XXX.XXX", "XXX.XXX.XXX", "XXX.XXX.XXX.XXX", "XXXX.XXXX"], correct: 2 },
-      { q: "RAM stands for?", options: ["Random Access Memory", "Read Access Memory", "Rapid Access Memory", "Real Access Memory"], correct: 0 },
-      { q: "Binary 1111 = ?", options: ["14", "15", "16", "17"], correct: 1 },
-      { q: "CSS for center text?", options: ["text-align:center", "align:center", "center:text", "text:center"], correct: 0 },
-      { q: "Python comment symbol?", options: ["//", "/*", "#", "<!--"], correct: 2 },
-      { q: "HTTP status OK?", options: ["100", "200", "300", "400"], correct: 1 },
-      { q: "Database query language?", options: ["HTML", "CSS", "SQL", "XML"], correct: 2 }
-    ],
-    sciences: [
-      { q: "Water formula?", options: ["H₂O", "HO₂", "H₃O", "H₂O₂"], correct: 0 },
-      { q: "Speed of light?", options: ["3×10⁸ m/s", "3×10⁷ m/s", "3×10⁹ m/s", "3×10⁶ m/s"], correct: 0 },
-      { q: "Oxygen symbol?", options: ["O", "Ox", "O₂", "Oxy"], correct: 0 },
-      { q: "Earth's gravity?", options: ["9.8 m/s²", "10 m/s²", "9.6 m/s²", "8.9 m/s²"], correct: 0 },
-      { q: "Photosynthesis gas?", options: ["CO₂", "O₂", "N₂", "H₂"], correct: 1 },
-      { q: "DNA bases count?", options: ["3", "4", "5", "6"], correct: 1 },
-      { q: "Atomic number H?", options: ["1", "2", "3", "4"], correct: 0 },
-      { q: "Boiling point H₂O?", options: ["90°C", "95°C", "100°C", "105°C"], correct: 2 },
-      { q: "Smallest particle?", options: ["Atom", "Molecule", "Electron", "Quark"], correct: 3 },
-      { q: "Force = mass × ?", options: ["velocity", "acceleration", "distance", "time"], correct: 1 },
-      { q: "Gold symbol?", options: ["Go", "Gd", "Au", "Ag"], correct: 2 },
-      { q: "Closest planet to Sun?", options: ["Venus", "Earth", "Mercury", "Mars"], correct: 2 },
-      { q: "Sound travels through?", options: ["Vacuum", "Air", "Space", "Nothing"], correct: 1 },
-      { q: "Human bones count?", options: ["206", "208", "210", "212"], correct: 0 },
-      { q: "Photosynthesis produces?", options: ["CO₂", "O₂", "N₂", "H₂"], correct: 1 }
-    ],
-    'religious-education': [
-      { q: "Buddhism founder?", options: ["Jesus", "Buddha", "Muhammad", "Moses"], correct: 1 },
-      { q: "Islam holy book?", options: ["Bible", "Torah", "Quran", "Vedas"], correct: 2 },
-      { q: "Christianity symbol?", options: ["Star", "Cross", "Crescent", "Wheel"], correct: 1 },
-      { q: "Judaism holy day?", options: ["Sunday", "Friday", "Saturday", "Monday"], correct: 2 },
-      { q: "Hindu sacred river?", options: ["Nile", "Ganges", "Amazon", "Thames"], correct: 1 },
-      { q: "Golden Rule means?", options: ["Be rich", "Treat others well", "Pray daily", "Fast often"], correct: 1 },
-      { q: "Ten Commandments from?", options: ["Jesus", "Buddha", "Moses", "Muhammad"], correct: 2 },
-      { q: "Pilgrimage to Mecca?", options: ["Hajj", "Umrah", "Jihad", "Zakat"], correct: 0 },
-      { q: "Christian holy book?", options: ["Quran", "Torah", "Bible", "Vedas"], correct: 2 },
-      { q: "Buddhist meditation goal?", options: ["Wealth", "Fame", "Enlightenment", "Power"], correct: 2 },
-      { q: "Islam prayer times?", options: ["3", "4", "5", "6"], correct: 2 },
-      { q: "Christmas celebrates?", options: ["Jesus' birth", "Jesus' death", "Jesus' baptism", "Jesus' teaching"], correct: 0 },
-      { q: "Sikh holy book?", options: ["Guru Granth Sahib", "Bible", "Quran", "Torah"], correct: 0 },
-      { q: "Ramadan is month of?", options: ["Celebration", "Fasting", "Pilgrimage", "Prayer"], correct: 1 },
-      { q: "Karma concept from?", options: ["Christianity", "Islam", "Hinduism", "Judaism"], correct: 2 }
-    ]
+    mathematics: mathematicsTimeChallenge,
+    'computer-studies': computerStudiesTimeChallenge,
+    sciences: scienceTimeChallenge,
+    'religious-education': religiousEducationTimeChallenge,
   };
 
   const questionSet = questionSets[config.subject as keyof typeof questionSets] || questionSets.mathematics;
@@ -180,7 +121,7 @@ export function TimeChallenge({ config, onBack, isGuest = false, onUpdateProgres
         <Card className="text-center">
           <CardContent className="p-8">
             <div className="mb-6">
-              <div className="text-6xl mb-4">🦅</div>
+              <Logo className="h-16 w-16 mx-auto mb-4" />
               <Timer className="h-16 w-16 text-red-500 mx-auto mb-4" />
               <h2 className="text-3xl font-bold text-gray-900 mb-2">Time's Up!</h2>
               <p className="text-gray-600">Chisomo the Eagle is impressed with your speed!</p>
@@ -207,7 +148,7 @@ export function TimeChallenge({ config, onBack, isGuest = false, onUpdateProgres
 
             <div className="bg-amber-50 border border-amber-200 rounded-lg p-6 mb-8">
               <div className="flex items-start space-x-3">
-                <div className="text-3xl">🦅</div>
+                <Logo className="text-3xl" />
                 <div className="text-left">
                   <h4 className="font-semibold text-amber-900 mb-2">Chisomo's Speed Wisdom</h4>
                   <p className="text-amber-800">
@@ -260,7 +201,7 @@ export function TimeChallenge({ config, onBack, isGuest = false, onUpdateProgres
               
               <div className="bg-amber-50 border border-amber-200 rounded-lg p-6 mb-6">
                 <div className="flex items-start space-x-3">
-                  <div className="text-3xl">🦅</div>
+                  <Logo className="text-3xl" />
                   <div className="text-left">
                     <h4 className="font-semibold text-amber-900 mb-2">Chisomo's Speed Tips</h4>
                     <ul className="text-amber-800 text-sm space-y-1">

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   BookOpen, 
   Trophy, 
@@ -28,12 +29,12 @@ interface GuestDashboardProps {
     challengesTried: string[];
     subjectsExplored: string[];
   };
-  onNavigate: (view: string) => void;
   onUpgrade: () => void;
   onUpdateProgress: (update: any) => void;
 }
 
-export function GuestDashboard({ user, guestProgress, onNavigate, onUpgrade, onUpdateProgress }: GuestDashboardProps) {
+export function GuestDashboard({ user, guestProgress, onUpgrade, onUpdateProgress }: GuestDashboardProps) {
+  const navigate = useNavigate();
   const subjects = [
     { 
       id: 'computer-studies', 
@@ -63,7 +64,7 @@ export function GuestDashboard({ user, guestProgress, onNavigate, onUpgrade, onU
       lessons: 18,
       completed: 0,
       nextLesson: 'Scientific Method',
-      available: false
+      available: true
     },
     { 
       id: 'religious-education', 
@@ -73,7 +74,7 @@ export function GuestDashboard({ user, guestProgress, onNavigate, onUpgrade, onU
       lessons: 10,
       completed: 0,
       nextLesson: 'World Religions Overview',
-      available: false
+      available: true
     }
   ];
 
@@ -108,7 +109,7 @@ export function GuestDashboard({ user, guestProgress, onNavigate, onUpgrade, onU
       icon: Trophy, 
       color: 'text-yellow-600', 
       bg: 'bg-yellow-100', 
-      available: false 
+      available: true 
     }
   ];
 
@@ -126,7 +127,7 @@ export function GuestDashboard({ user, guestProgress, onNavigate, onUpgrade, onU
         timeSpent: guestProgress.timeSpent + 5 // Add 5 minutes for starting
       });
     }
-    onNavigate('lesson', subjectId);
+    navigate(`/lesson/${subjectId}`);
   };
 
   const handleQuizStart = () => {
@@ -134,7 +135,7 @@ export function GuestDashboard({ user, guestProgress, onNavigate, onUpgrade, onU
     onUpdateProgress({
       timeSpent: guestProgress.timeSpent + 3
     });
-    onNavigate('quiz');
+    navigate('/quiz');
   };
 
   return (
@@ -184,7 +185,7 @@ export function GuestDashboard({ user, guestProgress, onNavigate, onUpgrade, onU
                 Create Account & Save Progress
               </Button>
               <Button 
-                onClick={() => onNavigate('subjects')} 
+                onClick={() => navigate('/subjects')} 
                 variant="outline"
                 className="border-white text-white hover:bg-white/10"
               >
@@ -236,7 +237,7 @@ export function GuestDashboard({ user, guestProgress, onNavigate, onUpgrade, onU
                 <Button 
                   variant="outline" 
                   size="sm"
-                  onClick={() => onNavigate('subjects')}
+                  onClick={() => navigate('/subjects')}
                 >
                   View All
                 </Button>
@@ -298,7 +299,7 @@ export function GuestDashboard({ user, guestProgress, onNavigate, onUpgrade, onU
                 <Button 
                   variant="outline" 
                   size="sm"
-                  onClick={() => onNavigate('challenges')}
+                  onClick={() => navigate('/challenges')}
                 >
                   View More
                 </Button>

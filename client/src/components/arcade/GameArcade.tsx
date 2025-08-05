@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   Gamepad2, 
   Clock, 
@@ -21,15 +22,16 @@ import {
 } from 'lucide-react';
 import { Card, CardHeader, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
-import { ChisomoEagle } from '../mascot/ChisomoEagle';
 import { BrainBuster } from './games/BrainBuster';
 import { Flashcards } from './games/Flashcards';
 import { TimeChallenge } from './games/TimeChallenge';
 import { JumbleMaster } from './games/JumbleMaster';
 import { ClassChallenge } from './games/ClassChallenge';
+import { ZedLegacyGame } from './games/ZedLegacyGame';
+import { Mascot } from '../mascot';
+import { AppLayout } from '../layout/AppLayout';
 
 interface GameArcadeProps {
-  onNavigate: (view: string) => void;
   isGuest?: boolean;
   onUpdateProgress?: (update: any) => void;
 }
@@ -129,7 +131,8 @@ function SubjectSelectionModal({ gameId, onSubjectSelect, onClose }: SubjectSele
   );
 }
 
-export function GameArcade({ onNavigate, isGuest = false, onUpdateProgress }: GameArcadeProps) {
+export function GameArcade({ isGuest = false, onUpdateProgress }: GameArcadeProps) {
+  const navigate = useNavigate();
   const [selectedGame, setSelectedGame] = useState<string | null>(null);
   const [selectedSubject, setSelectedSubject] = useState<string>('');
   const [showSubjectModal, setShowSubjectModal] = useState(false);
@@ -137,65 +140,71 @@ export function GameArcade({ onNavigate, isGuest = false, onUpdateProgress }: Ga
 
   const games = [
     {
-      id: 'brain-buster',
-      title: 'Brain Buster',
-      description: 'Solo timed quiz to test your knowledge across all subjects',
-      icon: Brain,
-      color: 'from-green-600 via-emerald-500 to-amber-500', // Zambian flag colors
-      difficulty: 'Medium',
+      id: 'mulungushi-quiz',
+      title: 'Mulungushi Quiz',
+      description: 'Test your strength of mind with solo challenges',
+      icon: Brain, // or 🧠
+      color: 'from-green-600 via-emerald-500 to-amber-500', // Carousel/flag
+      players: 'Solo',
       duration: '5-15 min',
-      players: 'Solo',
-      features: ['Timed Questions', 'Multiple Choice', 'Instant Feedback', 'Eagle Tips'],
+      features: ['Timed Questions', 'Multiple Choice', 'Instant Feedback'],
       guestAllowed: true
     },
     {
-      id: 'flashcards',
-      title: 'Flashcards',
-      description: 'Flip cards to reinforce key concepts and definitions',
-      icon: Shuffle,
-      color: 'from-amber-500 via-orange-500 to-red-500', // Zambian sunset
-      difficulty: 'Easy',
+      id: 'luangwa-flip',
+      title: 'Luangwa Flip',
+      description: 'Flip through fast facts and sharpen your memory',
+      icon: Shuffle, // or 🦓
+      color: 'from-amber-500 via-orange-500 to-red-500', // Carousel/sunset
+      players: 'Solo',
       duration: '10-20 min',
-      players: 'Solo',
-      features: ['Interactive Cards', 'Spaced Repetition', 'Progress Tracking', 'Eagle Wisdom'],
+      features: ['Interactive Cards', 'Spaced Repetition', 'Progress Tracking'],
       guestAllowed: true
     },
     {
-      id: 'time-challenge',
-      title: 'Time Challenge',
-      description: 'Rapid-fire quiz with 60 seconds to answer as many as possible',
-      icon: Timer,
-      color: 'from-red-600 via-orange-500 to-yellow-500', // Fire colors
-      difficulty: 'Hard',
+      id: 'zambezi-rush',
+      title: 'Zambezi Rush',
+      description: 'Beat the clock in this rapid-fire timed quiz',
+      icon: Timer, // or 🌊
+      color: 'from-blue-600 via-cyan-500 to-victoria-blue', // River blue
+      players: 'Solo',
       duration: '1-2 min',
-      players: 'Solo',
-      features: ['60 Second Timer', 'Quick Fire', 'Score Multiplier', 'Eagle Boost'],
+      features: ['60 Second Timer', 'Quick Fire', 'Score Multiplier'],
       guestAllowed: true
     },
     {
-      id: 'jumble-master',
-      title: 'Jumble Master',
-      description: 'Unscramble words, formulas, and definitions',
-      icon: Zap,
-      color: 'from-emerald-600 via-green-500 to-teal-500', // Forest green
-      difficulty: 'Medium',
-      duration: '5-10 min',
+      id: 'kundalila-puzzles',
+      title: 'Kundalila Puzzles',
+      description: 'Unscramble clues and discover the missing pieces',
+      icon: Zap, // or 🧩
+      color: 'from-emerald-600 via-green-500 to-teal-500', // Forest
       players: 'Solo',
-      features: ['Word Puzzles', 'Formula Scrambles', 'Hint System', 'Eagle Clues'],
-      guestAllowed: false
+      duration: '5-10 min',
+      features: ['Word Puzzles', 'Formula Scrambles', 'Hint System'],
+      guestAllowed: true
     },
     {
-      id: 'class-challenge',
-      title: 'Class Challenge',
-      description: 'Multiplayer game for teacher-created challenges',
-      icon: Users,
-      color: 'from-purple-600 via-indigo-500 to-blue-500', // Royal colors
-      difficulty: 'Variable',
-      duration: '10-30 min',
+      id: 'kalambo-clash',
+      title: 'Kalambo Clash',
+      description: 'Compete with classmates in high-stakes brain duels',
+      icon: Users, // or 🥇
+      color: 'from-copper-orange via-zambezi-teal to-sunset-gold', // Copper/teal
       players: 'Multiplayer',
-      features: ['Real-time Competition', 'Custom Questions', 'Live Leaderboard', 'Eagle Mascot'],
-      guestAllowed: false
-    }
+      duration: '10-30 min',
+      features: ['Real-time Competition', 'Custom Questions', 'Live Leaderboard'],
+      guestAllowed: true
+    },
+    {
+      id: 'zed-legacy',
+      title: 'Zed Legacy',
+      description: 'Discover Zambia’s history, heroes, and culture',
+      icon: Award, // or 🇿🇲
+      color: 'from-orange-500 via-pink-500 to-red-500', // Carousel gradient
+      players: 'Solo',
+      duration: '5-10 min',
+      features: ['Zambian Facts', 'Multiple Choice', 'Badges'],
+      guestAllowed: true
+    },
   ];
 
   const handleGameSelect = (gameId: string) => {
@@ -205,7 +214,13 @@ export function GameArcade({ onNavigate, isGuest = false, onUpdateProgress }: Ga
     const isLocked = isGuest && !game.guestAllowed;
     if (isLocked) return;
 
-    // Show subject selection modal
+    if (gameId === 'zed-legacy') {
+      setSelectedGame('zed-legacy');
+      setSelectedSubject(''); // No subject needed
+      return;
+    }
+
+    // Show subject selection modal for other games
     setPendingGameId(gameId);
     setShowSubjectModal(true);
   };
@@ -223,6 +238,9 @@ export function GameArcade({ onNavigate, isGuest = false, onUpdateProgress }: Ga
   };
 
   const renderGameComponent = () => {
+    if (selectedGame === 'zed-legacy') {
+      return <ZedLegacyGame onBack={handleBackToArcade} />;
+    }
     const gameConfig = {
       subject: selectedSubject,
       topic: 'general',
@@ -238,15 +256,15 @@ export function GameArcade({ onNavigate, isGuest = false, onUpdateProgress }: Ga
     };
 
     switch (selectedGame) {
-      case 'brain-buster':
+      case 'mulungushi-quiz':
         return <BrainBuster {...commonProps} />;
-      case 'flashcards':
+      case 'luangwa-flip':
         return <Flashcards {...commonProps} />;
-      case 'time-challenge':
+      case 'zambezi-rush':
         return <TimeChallenge {...commonProps} />;
-      case 'jumble-master':
+      case 'kundalila-puzzles':
         return <JumbleMaster {...commonProps} />;
-      case 'class-challenge':
+      case 'kalambo-clash':
         return <ClassChallenge {...commonProps} />;
       default:
         return null;
@@ -258,12 +276,13 @@ export function GameArcade({ onNavigate, isGuest = false, onUpdateProgress }: Ga
   }
 
   return (
+    <AppLayout>
     <div className="max-w-7xl mx-auto px-4 py-6">
       {/* Header */}
       <div className="mb-8 animate-slide-up">
         <Button 
           variant="ghost" 
-          onClick={() => onNavigate('dashboard')}
+          onClick={() => navigate('/dashboard')}
           className="mb-6 hover:bg-green-50"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
@@ -287,10 +306,10 @@ export function GameArcade({ onNavigate, isGuest = false, onUpdateProgress }: Ga
             <div className="mt-6 glass-effect rounded-xl p-6 max-w-2xl mx-auto border border-amber-200 animate-scale-in">
               <div className="flex items-center justify-center space-x-2 text-amber-800">
                 <Target className="h-6 w-6" />
-                <span className="font-semibold text-lg">Guest Mode: Try 3 sample games</span>
+                <span className="font-semibold text-lg">Guest Mode: Full Access Available</span>
               </div>
               <p className="text-amber-700 mt-2">
-                Create an account to unlock all games and save your high scores!
+                Try all games! Create an account to save your progress and unlock premium features!
               </p>
             </div>
           )}
@@ -300,22 +319,17 @@ export function GameArcade({ onNavigate, isGuest = false, onUpdateProgress }: Ga
       {/* Enhanced Eagle Mascot Introduction */}
       <Card className="mb-8 bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 border border-amber-300 shadow-xl animate-slide-up" style={{ animationDelay: '0.2s' }}>
         <CardContent className="p-8">
-          <div className="flex items-center space-x-6">
-            <div className="relative">
-              <ChisomoEagle 
-                size="lg" 
-                mood="excited" 
-                showBubble={false}
-                animated={true}
-                className="transform hover:scale-110 transition-transform duration-300"
-              />
+          <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
+            <div className="relative flex flex-col items-center">
+                              <Mascot size="lg" mood="excited" showBubble={false} className="transform hover:scale-110 transition-transform duration-300" />
+              <span className="mt-2 text-xs text-amber-700 font-semibold tracking-wide">Chisomo the Mascot</span>
               <div className="absolute -top-2 -right-2 animate-bounce">
                 <div className="w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center">
                   <Star className="h-3 w-3 text-yellow-800" />
                 </div>
               </div>
             </div>
-            <div className="flex-1">
+            <div className="flex-1 text-center md:text-left">
               <h3 className="text-2xl font-bold bg-gradient-to-r from-amber-800 to-orange-700 bg-clip-text text-transparent mb-3">
                 Meet Chisomo the Eagle!
               </h3>
@@ -323,7 +337,7 @@ export function GameArcade({ onNavigate, isGuest = false, onUpdateProgress }: Ga
                 Your wise learning companion will guide you through each game with helpful tips, concept nuggets, and encouragement. 
                 The eagle represents wisdom and soaring to new heights - just like your academic journey in Zambia!
               </p>
-              <div className="mt-4 flex items-center space-x-2">
+              <div className="mt-4 flex items-center justify-center md:justify-start space-x-2">
                 <Trophy className="h-5 w-5 text-amber-600" />
                 <span className="text-amber-700 font-medium">Ready to soar to new learning heights?</span>
               </div>
@@ -384,22 +398,6 @@ export function GameArcade({ onNavigate, isGuest = false, onUpdateProgress }: Ga
               </div>
 
               <CardContent className="p-6">
-                {/* Difficulty Badge */}
-                <div className="flex items-center justify-between mb-4">
-                  <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                    game.difficulty === 'Easy' ? 'bg-green-100 text-green-700' :
-                    game.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-700' :
-                    game.difficulty === 'Hard' ? 'bg-red-100 text-red-700' :
-                    'bg-gray-100 text-gray-700'
-                  }`}>
-                    {game.difficulty}
-                  </span>
-                  <div className="flex items-center space-x-1">
-                    <Star className="h-4 w-4 text-yellow-500" />
-                    <span className="text-sm text-gray-600">4.8</span>
-                  </div>
-                </div>
-
                 {/* Features */}
                 <div className="space-y-2 mb-6">
                   {game.features.map((feature, index) => (
@@ -432,7 +430,7 @@ export function GameArcade({ onNavigate, isGuest = false, onUpdateProgress }: Ga
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <Card>
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-blue-600">5</div>
+            <div className="text-2xl font-bold text-blue-600">6</div>
             <div className="text-sm text-gray-600">Game Modes</div>
           </CardContent>
         </Card>
@@ -502,5 +500,6 @@ export function GameArcade({ onNavigate, isGuest = false, onUpdateProgress }: Ga
         />
       )}
     </div>
+    </AppLayout>
   );
 }

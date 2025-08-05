@@ -1,15 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { User, Pencil } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { ProfileForm } from './ProfileForm';
-
-interface ProfilePageProps {
-  user: any; // Replace 'any' with your User type if available
-  onUpdate: (data: any) => Promise<void>;
-  isLoading: boolean;
-  error: string;
-}
+import { UserContext } from '../../context/UserContext';
+import type { User as UserType, Achievement } from '../../types';
 
 const TABS = [
   { key: 'personal', label: 'Personal Info' },
@@ -18,19 +13,20 @@ const TABS = [
   { key: 'settings', label: 'Settings' },
 ];
 
-export default function ProfilePage({ user, onUpdate, isLoading, error }: ProfilePageProps) {
+export default function ProfilePage() {
+  const { user, onUpdate, isLoading, error } = useContext(UserContext);
   const [activeTab, setActiveTab] = useState('personal');
   const [isAvatarModalOpen, setAvatarModalOpen] = useState(false);
 
   // Fallbacks for missing user data
   const firstName = user?.firstName || '';
   const lastName = user?.lastName || '';
-  const grade = user?.grade ? `Grade ${user.grade}` : '';
+  const grade = user?.grade ? (user.grade === 8 ? 'FORM1' : `Grade ${user.grade}`) : '';
   const avatarUrl = user?.avatar || '';
   const stats = {
     lessons: user?.subjects?.length || 0,
-    challenges: user?.totalPoints || 0,
-    achievements: user?.achievements?.length || 0,
+    challenges: 0, // Replace with actual property if available
+    achievements: 0, // Replace with actual property if available
   };
 
   return (
@@ -46,7 +42,7 @@ export default function ProfilePage({ user, onUpdate, isLoading, error }: Profil
             )}
           </div>
           <Button
-            size="icon"
+            size="sm"
             variant="ghost"
             className="absolute bottom-0 right-0 bg-white border border-gray-200 shadow-sm"
             aria-label="Edit avatar"
@@ -117,7 +113,7 @@ export default function ProfilePage({ user, onUpdate, isLoading, error }: Profil
 }
 
 // Stub components for each tab
-function ProgressTab({ user }: { user: any }) {
+function ProgressTab({ user }: { user: UserType | null }) {
   // Example: use user data for progress
   const progress = {
     lessonsCompleted: user?.subjects?.length || 0,
@@ -158,7 +154,7 @@ function ProgressTab({ user }: { user: any }) {
   );
 }
 
-function AchievementsTab({ user }: { user: any }) {
+function AchievementsTab({ user }: { user: UserType | null }) {
   // Use real achievements if available
   const achievements = user?.achievements || [];
   return (
@@ -169,7 +165,7 @@ function AchievementsTab({ user }: { user: any }) {
           {achievements.length === 0 && (
             <div className="text-gray-500">No achievements yet.</div>
           )}
-          {achievements.map((a: any, i: number) => (
+          {achievements.map((a: Achievement, i: number) => (
             <div key={i} className={`flex items-center gap-3 p-3 rounded-lg border ${a.earned ? 'bg-green-50 border-green-200' : 'bg-gray-50 border-gray-200'}`}>
               <span className={`inline-block w-3 h-3 rounded-full ${a.earned ? 'bg-green-500' : 'bg-gray-400'}`} />
               <div>
@@ -185,7 +181,7 @@ function AchievementsTab({ user }: { user: any }) {
   );
 }
 
-function SettingsTab({ user }: { user: any }) {
+function SettingsTab({ user }: { user: UserType | null }) {
   return (
     <div className="space-y-6">
       <Card className="p-6">

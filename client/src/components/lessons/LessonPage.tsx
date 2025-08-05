@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
 import { 
   Play, 
   Pause, 
@@ -21,346 +23,26 @@ import {
 import { Card, CardHeader, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { InteractiveLessonContent } from './InteractiveLessonContent';
+import computerStudiesLessons from './ComputerStudiesLessons';
+import mathematicsLessons from './MathematicsLessons';
+import scienceLessons from './ScienceLessons';
+import religiousEducationLessons from './ReligiousEducationLessons';
 
-interface LessonPageProps {
-  subjectId: string;
-  topicId?: string;
-  onNavigate: (view: string) => void;
-  isGuest?: boolean;
-  onUpdateProgress?: (update: any) => void;
-}
-
-export function LessonPage({ subjectId, topicId, onNavigate, isGuest = false, onUpdateProgress }: LessonPageProps) {
+export function LessonPage() {
+  const { subjectId, topicId } = useParams();
+  const navigate = useNavigate();
+  const { user } = useContext(UserContext);
+  const isGuest = !user;
   const [currentSection, setCurrentSection] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [completedSections, setCompletedSections] = useState<number[]>([]);
 
-  // Enhanced lesson data with topic-specific lessons
+  // Combine all subject lessons
   const lessons = {
-    'computer-studies': {
-      'programming-basics': {
-        id: 1,
-        title: 'Programming Fundamentals',
-        subject: 'Computer Studies/ICT',
-        duration: '45 minutes',
-        difficulty: 'Beginner',
-        points: 100,
-        sections: [
-          {
-            id: 0,
-            title: 'What is Programming?',
-            type: 'interactive',
-            duration: '12 minutes',
-            content: 'Learn programming fundamentals through interactive examples and hands-on practice.',
-            lessonId: 'programming-basics',
-            completed: false,
-            guestAllowed: true
-          },
-          {
-            id: 1,
-            title: 'Programming Concepts Video',
-            type: 'video',
-            duration: '8 minutes',
-            content: 'Watch an introduction to programming concepts and real-world applications.',
-            videoUrl: 'https://example.com/video1.mp4',
-            completed: false,
-            guestAllowed: true
-          },
-          {
-            id: 2,
-            title: 'Variables and Data Types',
-            type: 'interactive',
-            duration: '15 minutes',
-            content: 'Interactive lesson on variables, data types, and basic programming concepts.',
-            lessonId: 'variables-datatypes',
-            completed: false,
-            guestAllowed: false
-          },
-          {
-            id: 3,
-            title: 'Programming Quiz',
-            type: 'quiz',
-            duration: '10 minutes',
-            content: 'Test your understanding with interactive programming questions.',
-            completed: false,
-            guestAllowed: false
-          }
-        ]
-      },
-      'web-development': {
-        id: 2,
-        title: 'Web Development Basics',
-        subject: 'Computer Studies/ICT',
-        duration: '60 minutes',
-        difficulty: 'Intermediate',
-        points: 150,
-        sections: [
-          {
-            id: 0,
-            title: 'Introduction to HTML',
-            type: 'interactive',
-            duration: '20 minutes',
-            content: 'Learn HTML structure and basic tags for web development.',
-            lessonId: 'html-basics',
-            completed: false,
-            guestAllowed: true
-          },
-          {
-            id: 1,
-            title: 'CSS Styling',
-            type: 'interactive',
-            duration: '20 minutes',
-            content: 'Style your web pages with CSS properties and selectors.',
-            lessonId: 'css-basics',
-            completed: false,
-            guestAllowed: true
-          },
-          {
-            id: 2,
-            title: 'JavaScript Fundamentals',
-            type: 'interactive',
-            duration: '20 minutes',
-            content: 'Add interactivity to your websites with JavaScript.',
-            lessonId: 'javascript-basics',
-            completed: false,
-            guestAllowed: false
-          }
-        ]
-      },
-      'database-management': {
-        id: 3,
-        title: 'Database Management Fundamentals',
-        subject: 'Computer Studies/ICT',
-        duration: '50 minutes',
-        difficulty: 'Advanced',
-        points: 200,
-        sections: [
-          {
-            id: 0,
-            title: 'Introduction to Databases',
-            type: 'interactive',
-            duration: '15 minutes',
-            content: 'Learn what databases are and why they are important.',
-            lessonId: 'database-intro',
-            completed: false,
-            guestAllowed: false
-          },
-          {
-            id: 1,
-            title: 'SQL Basics',
-            type: 'interactive',
-            duration: '25 minutes',
-            content: 'Learn to query databases using SQL commands.',
-            lessonId: 'sql-basics',
-            completed: false,
-            guestAllowed: false
-          },
-          {
-            id: 2,
-            title: 'Database Design',
-            type: 'interactive',
-            duration: '10 minutes',
-            content: 'Design efficient database structures.',
-            lessonId: 'database-design',
-            completed: false,
-            guestAllowed: false
-          }
-        ]
-      }
-    },
-    'mathematics': {
-      'basic-arithmetic': {
-        id: 4,
-        title: 'Basic Arithmetic Operations',
-        subject: 'Mathematics',
-        duration: '50 minutes',
-        difficulty: 'Beginner',
-        points: 100,
-        sections: [
-          {
-            id: 0,
-            title: 'Welcome to Arithmetic!',
-            type: 'interactive',
-            duration: '15 minutes',
-            content: 'Learn addition, subtraction, multiplication, and division through interactive examples.',
-            lessonId: 'basic-arithmetic',
-            completed: false,
-            guestAllowed: true
-          },
-          {
-            id: 1,
-            title: 'Arithmetic in Daily Life',
-            type: 'video',
-            duration: '10 minutes',
-            content: 'See how arithmetic is used in everyday Zambian contexts.',
-            videoUrl: 'https://example.com/math-video.mp4',
-            completed: false,
-            guestAllowed: true
-          },
-          {
-            id: 2,
-            title: 'Practice Problems',
-            type: 'interactive',
-            duration: '20 minutes',
-            content: 'Solve real-world arithmetic problems with step-by-step guidance.',
-            lessonId: 'arithmetic-practice',
-            completed: false,
-            guestAllowed: false
-          },
-          {
-            id: 3,
-            title: 'Arithmetic Assessment',
-            type: 'quiz',
-            duration: '15 minutes',
-            content: 'Test your arithmetic skills with varied problem types.',
-            completed: false,
-            guestAllowed: false
-          }
-        ]
-      },
-      'algebra': {
-        id: 5,
-        title: 'Introduction to Algebra',
-        subject: 'Mathematics',
-        duration: '55 minutes',
-        difficulty: 'Intermediate',
-        points: 120,
-        sections: [
-          {
-            id: 0,
-            title: 'What is Algebra?',
-            type: 'interactive',
-            duration: '15 minutes',
-            content: 'Discover the world of variables and algebraic expressions.',
-            lessonId: 'algebra-intro',
-            completed: false,
-            guestAllowed: true
-          },
-          {
-            id: 1,
-            title: 'Solving Linear Equations',
-            type: 'interactive',
-            duration: '25 minutes',
-            content: 'Master the art of solving equations with one variable.',
-            lessonId: 'linear-equations',
-            completed: false,
-            guestAllowed: true
-          },
-          {
-            id: 2,
-            title: 'Graphing Linear Functions',
-            type: 'interactive',
-            duration: '15 minutes',
-            content: 'Visualize algebraic relationships through graphs.',
-            lessonId: 'linear-graphs',
-            completed: false,
-            guestAllowed: false
-          }
-        ]
-      }
-    },
-    'sciences': {
-      'scientific-method': {
-        id: 6,
-        title: 'The Scientific Method',
-        subject: 'Sciences',
-        duration: '40 minutes',
-        difficulty: 'Beginner',
-        points: 100,
-        sections: [
-          {
-            id: 0,
-            title: 'Introduction to Scientific Method',
-            type: 'interactive',
-            duration: '15 minutes',
-            content: 'Learn the steps of scientific inquiry through interactive examples.',
-            lessonId: 'scientific-method',
-            completed: false,
-            guestAllowed: true
-          },
-          {
-            id: 1,
-            title: 'Famous Scientific Discoveries',
-            type: 'video',
-            duration: '8 minutes',
-            content: 'Watch how great scientists used the scientific method.',
-            videoUrl: 'https://example.com/science-video.mp4',
-            completed: false,
-            guestAllowed: true
-          },
-          {
-            id: 2,
-            title: 'Virtual Laboratory',
-            type: 'interactive',
-            duration: '12 minutes',
-            content: 'Conduct virtual experiments using the scientific method.',
-            lessonId: 'virtual-lab',
-            completed: false,
-            guestAllowed: false
-          },
-          {
-            id: 3,
-            title: 'Scientific Method Quiz',
-            type: 'quiz',
-            duration: '10 minutes',
-            content: 'Test your understanding of scientific inquiry.',
-            completed: false,
-            guestAllowed: false
-          }
-        ]
-      }
-    },
-    'religious-education': {
-      'world-religions': {
-        id: 7,
-        title: 'Understanding World Religions',
-        subject: 'Religious Education',
-        duration: '35 minutes',
-        difficulty: 'Beginner',
-        points: 100,
-        sections: [
-          {
-            id: 0,
-            title: 'What is Religion?',
-            type: 'interactive',
-            duration: '12 minutes',
-            content: 'Explore the role of religion in human society and culture.',
-            lessonId: 'world-religions',
-            completed: false,
-            guestAllowed: true
-          },
-          {
-            id: 1,
-            title: 'Religious Traditions Video',
-            type: 'video',
-            duration: '10 minutes',
-            content: 'Visual journey through major world religions.',
-            videoUrl: 'https://example.com/religion-video.mp4',
-            completed: false,
-            guestAllowed: true
-          },
-          {
-            id: 2,
-            title: 'Comparative Religion Study',
-            type: 'interactive',
-            duration: '15 minutes',
-            content: 'Compare beliefs, practices, and values across religions.',
-            lessonId: 'comparative-religion',
-            completed: false,
-            guestAllowed: false
-          },
-          {
-            id: 3,
-            title: 'Religion and Ethics Quiz',
-            type: 'quiz',
-            duration: '8 minutes',
-            content: 'Assess your understanding of religious concepts.',
-            completed: false,
-            guestAllowed: false
-          }
-        ]
-      }
-    }
+    'computer-studies': computerStudiesLessons,
+    'mathematics': mathematicsLessons,
+    'sciences': scienceLessons,
+    'religious-education': religiousEducationLessons,
   };
 
   // Get the appropriate lesson based on topicId or default to first lesson in subject
@@ -385,12 +67,7 @@ export function LessonPage({ subjectId, topicId, onNavigate, isGuest = false, on
     if (!completedSections.includes(sectionId) && !isGuest) {
       setCompletedSections([...completedSections, sectionId]);
     }
-    if (isGuest && onUpdateProgress) {
-      onUpdateProgress({
-        lessonsViewed: [lesson.id.toString()],
-        timeSpent: 5
-      });
-    }
+    // No-op for guest progress
   };
 
   const nextSection = () => {
@@ -427,7 +104,7 @@ export function LessonPage({ subjectId, topicId, onNavigate, isGuest = false, on
   };
 
   const handleUpgrade = () => {
-    onNavigate('register');
+    navigate('/register');
   };
 
   const renderSectionContent = () => {
@@ -455,7 +132,7 @@ export function LessonPage({ subjectId, topicId, onNavigate, isGuest = false, on
       case 'interactive':
         return (
           <InteractiveLessonContent
-            subject={subjectId}
+            subject={subjectId || 'computer-studies'}
             lessonId={currentSectionData.lessonId || topicId || 'default'}
             sectionData={currentSectionData}
             onComplete={() => markSectionComplete(currentSection)}
@@ -504,7 +181,7 @@ export function LessonPage({ subjectId, topicId, onNavigate, isGuest = false, on
         return (
           <div className="space-y-6">
             <div className="bg-purple-50 border border-purple-200 rounded-lg p-6">
-              <h3 className="text-xl font-semibold text-purple-900 mb-4">Knowledge Check</h3>
+              <h3 className="text-xl font-semibold mb-4 text-purple-900">Knowledge Check</h3>
               <div className="space-y-4">
                 <div>
                   <h4 className="font-medium mb-3">Sample Question: What is the main purpose of this lesson?</h4>
@@ -536,7 +213,7 @@ export function LessonPage({ subjectId, topicId, onNavigate, isGuest = false, on
       <div className="mb-6">
         <Button 
           variant="ghost" 
-          onClick={() => onNavigate('subjects')}
+          onClick={() => navigate('/subjects')}
           className="mb-4"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
@@ -709,8 +386,8 @@ export function LessonPage({ subjectId, topicId, onNavigate, isGuest = false, on
               <div className="space-y-3">
                 {[
                   { name: 'Lesson Summary', type: 'PDF', size: '1.2 MB', guestAllowed: true },
-                  { name: 'Practice Exercises', type: 'PDF', size: '2.1 MB', guestAllowed: false },
-                  { name: 'Additional Reading', type: 'PDF', size: '3.4 MB', guestAllowed: false }
+                  { name: 'Practice Exercises', type: 'PDF', size: '2.1 MB', guestAllowed: true },
+                  { name: 'Additional Reading', type: 'PDF', size: '3.4 MB', guestAllowed: true }
                 ].map((resource, index) => {
                   const isLocked = isGuest && !resource.guestAllowed;
                   return (
@@ -732,7 +409,7 @@ export function LessonPage({ subjectId, topicId, onNavigate, isGuest = false, on
               {isGuest && (
                 <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
                   <p className="text-blue-800 text-sm">
-                    Create an account to download all lesson resources and materials.
+                    All resources available! Create an account to save your progress and unlock premium features.
                   </p>
                 </div>
               )}

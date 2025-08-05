@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { Card, CardHeader, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
+import { AppLayout } from '../layout/AppLayout';
 
 interface ChallengeModeProps {
   challengeId: number;
@@ -348,6 +349,7 @@ export function ChallengeMode({ challengeId, onBack, isGuest = false, onUpdatePr
   // Lobby State
   if (gameState === 'lobby') {
     return (
+      <AppLayout>
       <div className="max-w-4xl mx-auto px-4 py-6">
         <Button variant="ghost" onClick={onBack} className="mb-4">
           <ArrowLeft className="h-4 w-4 mr-2" />
@@ -445,12 +447,14 @@ export function ChallengeMode({ challengeId, onBack, isGuest = false, onUpdatePr
           </CardContent>
         </Card>
       </div>
+      </AppLayout>
     );
   }
 
   // Countdown State
   if (gameState === 'countdown') {
     return (
+      <AppLayout>
       <div className="max-w-4xl mx-auto px-4 py-6 flex items-center justify-center min-h-[60vh]">
         <Card className="text-center p-12">
           <div className="text-8xl font-bold text-blue-600 mb-4 animate-pulse">
@@ -460,6 +464,7 @@ export function ChallengeMode({ challengeId, onBack, isGuest = false, onUpdatePr
           <p className="text-gray-600">Challenge starts in {countdownTime} second{countdownTime !== 1 ? 's' : ''}...</p>
         </Card>
       </div>
+      </AppLayout>
     );
   }
 
@@ -472,6 +477,7 @@ export function ChallengeMode({ challengeId, onBack, isGuest = false, onUpdatePr
     ).length / Object.keys(userAnswers).length) * 100) || 0;
 
     return (
+      <AppLayout>
       <div className="max-w-4xl mx-auto px-4 py-6">
         <Card className="text-center overflow-hidden">
           <div className="bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 p-8 text-white">
@@ -556,11 +562,13 @@ export function ChallengeMode({ challengeId, onBack, isGuest = false, onUpdatePr
           </CardContent>
         </Card>
       </div>
+      </AppLayout>
     );
   }
 
   // Playing State
   return (
+    <AppLayout>
     <div className="max-w-6xl mx-auto px-4 py-6">
       {/* Game Header */}
       <div className="mb-6">
@@ -744,5 +752,6 @@ export function ChallengeMode({ challengeId, onBack, isGuest = false, onUpdatePr
         </div>
       </div>
     </div>
+  </AppLayout>
   );
 }

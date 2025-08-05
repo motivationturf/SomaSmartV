@@ -12,6 +12,11 @@ import {
 } from 'lucide-react';
 import { Card, CardHeader, CardContent } from '../../ui/Card';
 import { Button } from '../../ui/Button';
+import mathematicsJumbleMaster from '../questions/JumbleMaster/MathematicsJumbleMaster';
+import computerStudiesJumbleMaster from '../questions/JumbleMaster/ComputerStudiesJumbleMaster';
+import scienceJumbleMaster from '../questions/JumbleMaster/ScienceJumbleMaster';
+import religiousEducationJumbleMaster from '../questions/JumbleMaster/ReligiousEducationJumbleMaster';
+import Logo from '../../ui/Logo';
 
 interface JumbleMasterProps {
   config: {
@@ -35,154 +40,10 @@ export function JumbleMaster({ config, onBack, isGuest = false, onUpdateProgress
 
   // Subject-specific jumble puzzles
   const puzzleSets = {
-    mathematics: [
-      {
-        scrambled: "THAGOREPYN",
-        answer: "PYTHAGORAS",
-        hint: "Famous Greek mathematician known for a theorem about triangles",
-        category: "Mathematician",
-        eagleTip: "🦅 This mathematician's theorem helps us find missing sides in right triangles!"
-      },
-      {
-        scrambled: "BAGELAR",
-        answer: "ALGEBRA",
-        hint: "Branch of mathematics using letters to represent numbers",
-        category: "Math Topic",
-        eagleTip: "🦅 This is where math meets mystery - solving for the unknown!"
-      },
-      {
-        scrambled: "MERTYGOE",
-        answer: "GEOMETRY",
-        hint: "Study of shapes, sizes, and positions",
-        category: "Math Topic",
-        eagleTip: "🦅 From triangles to circles, this field shapes our understanding of space!"
-      },
-      {
-        scrambled: "CAULCULS",
-        answer: "CALCULUS",
-        hint: "Advanced math dealing with rates of change",
-        category: "Math Topic",
-        eagleTip: "🦅 This helps us understand how things change - like an eagle's flight path!"
-      },
-      {
-        scrambled: "QAUNOITE",
-        answer: "EQUATION",
-        hint: "Mathematical statement showing equality",
-        category: "Math Concept",
-        eagleTip: "🦅 Balance is key - what's on one side must equal the other!"
-      }
-    ],
-    'computer-studies': [
-      {
-        scrambled: "MHLT",
-        answer: "HTML",
-        hint: "Markup language for creating web pages",
-        category: "Web Technology",
-        eagleTip: "🦅 This is the skeleton of every webpage - it gives structure!"
-      },
-      {
-        scrambled: "NOHTYP",
-        answer: "PYTHON",
-        hint: "Popular programming language known for simplicity",
-        category: "Programming Language",
-        eagleTip: "🦅 Named after a comedy group, not the snake - though both can be fun!"
-      },
-      {
-        scrambled: "AATDBASE",
-        answer: "DATABASE",
-        hint: "Organized collection of data",
-        category: "Data Storage",
-        eagleTip: "🦅 Like a digital filing cabinet - everything has its place!"
-      },
-      {
-        scrambled: "GORIMLATH",
-        answer: "ALGORITHM",
-        hint: "Step-by-step procedure for solving problems",
-        category: "Programming Concept",
-        eagleTip: "🦅 Like a recipe for computers - follow the steps to get results!"
-      },
-      {
-        scrambled: "KROWTEN",
-        answer: "NETWORK",
-        hint: "Connected group of computers",
-        category: "Technology",
-        eagleTip: "🦅 Like a flock of eagles communicating - connection is power!"
-      }
-    ],
-    sciences: [
-      {
-        scrambled: "TOHOSYNTHEPIS",
-        answer: "PHOTOSYNTHESIS",
-        hint: "Process plants use to make food from sunlight",
-        category: "Biology",
-        eagleTip: "🦅 Plants are nature's solar panels - converting light to energy!"
-      },
-      {
-        scrambled: "VITYRAG",
-        answer: "GRAVITY",
-        hint: "Force that pulls objects toward Earth",
-        category: "Physics",
-        eagleTip: "🦅 What goes up must come down - except for eagles who master the air!"
-      },
-      {
-        scrambled: "LECUMOLE",
-        answer: "MOLECULE",
-        hint: "Smallest unit of a chemical compound",
-        category: "Chemistry",
-        eagleTip: "🦅 Tiny building blocks that make up everything - even eagle feathers!"
-      },
-      {
-        scrambled: "VOLUTIOEN",
-        answer: "EVOLUTION",
-        hint: "Process of gradual change over time",
-        category: "Biology",
-        eagleTip: "🦅 How eagles developed their keen eyesight over millions of years!"
-      },
-      {
-        scrambled: "TOMA",
-        answer: "ATOM",
-        hint: "Smallest unit of matter",
-        category: "Chemistry",
-        eagleTip: "🦅 So small you can't see it, but it makes up everything you can see!"
-      }
-    ],
-    'religious-education': [
-      {
-        scrambled: "SPASMOCINO",
-        answer: "COMPASSION",
-        hint: "Feeling concern for others' suffering",
-        category: "Values",
-        eagleTip: "🦅 Like how eagles care for their young - protecting with love!"
-      },
-      {
-        scrambled: "TATIONMEDI",
-        answer: "MEDITATION",
-        hint: "Practice of focused attention and mindfulness",
-        category: "Spiritual Practice",
-        eagleTip: "🦅 Like when I soar quietly, focused and peaceful!"
-      },
-      {
-        scrambled: "GREMIPAGIL",
-        answer: "PILGRIMAGE",
-        hint: "Spiritual journey to a sacred place",
-        category: "Religious Practice",
-        eagleTip: "🦅 Like my migrations - a meaningful journey with purpose!"
-      },
-      {
-        scrambled: "DENWOLG LURE",
-        answer: "GOLDEN RULE",
-        hint: "Treat others as you want to be treated",
-        category: "Ethics",
-        eagleTip: "🦅 This wise principle creates harmony in communities!"
-      },
-      {
-        scrambled: "THIFA",
-        answer: "FAITH",
-        hint: "Strong belief or trust in something",
-        category: "Spiritual Concept",
-        eagleTip: "🦅 Faith is like trusting the wind will lift your wings!"
-      }
-    ]
+    mathematics: mathematicsJumbleMaster,
+    'computer-studies': computerStudiesJumbleMaster,
+    sciences: scienceJumbleMaster,
+    'religious-education': religiousEducationJumbleMaster,
   };
 
   const currentPuzzles = puzzleSets[config.subject as keyof typeof puzzleSets] || puzzleSets.mathematics;
@@ -246,7 +107,7 @@ export function JumbleMaster({ config, onBack, isGuest = false, onUpdateProgress
         <Card className="text-center">
           <CardContent className="p-8">
             <div className="mb-6">
-              <div className="text-6xl mb-4">🦅</div>
+              <Logo className="text-6xl mb-4" />
               <Trophy className="h-16 w-16 text-yellow-500 mx-auto mb-4" />
               <h2 className="text-3xl font-bold text-gray-900 mb-2">Jumble Master Complete!</h2>
               <p className="text-gray-600">Chisomo the Eagle applauds your word-solving skills!</p>
@@ -269,7 +130,7 @@ export function JumbleMaster({ config, onBack, isGuest = false, onUpdateProgress
 
             <div className="bg-amber-50 border border-amber-200 rounded-lg p-6 mb-8">
               <div className="flex items-start space-x-3">
-                <div className="text-3xl">🦅</div>
+                <Logo className="text-3xl" />
                 <div className="text-left">
                   <h4 className="font-semibold text-amber-900 mb-2">Chisomo's Word Wisdom</h4>
                   <p className="text-amber-800">
@@ -414,9 +275,9 @@ export function JumbleMaster({ config, onBack, isGuest = false, onUpdateProgress
           {feedback === 'correct' && (
             <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
               <div className="flex items-start space-x-3">
-                <div className="text-2xl">🦅</div>
+                <Logo className="text-2xl" />
                 <div>
-                  <h4 className="font-medium text-amber-900 mb-1">Eagle Wisdom</h4>
+                  <h4 className="font-medium text-amber-900 mb-1">Chisomo Wisdom</h4>
                   <p className="text-amber-800 text-sm">{currentPuzzleData.eagleTip}</p>
                 </div>
               </div>

@@ -3,10 +3,11 @@ import { User, Save, AlertCircle, CheckCircle } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { Card, CardHeader, CardContent } from '../ui/Card';
+import type { User } from '../../types';
 
 interface ProfileFormProps {
-  user: any;
-  onUpdate: (userData: any) => Promise<void>;
+  user: User;
+  onUpdate: (userData: Partial<User>) => Promise<void>;
   isLoading?: boolean;
   error?: string;
 }
@@ -23,7 +24,7 @@ export function ProfileForm({ user, onUpdate, isLoading = false, error = '' }: P
   const [isSuccess, setIsSuccess] = useState(false);
 
   const grades = [
-    { value: '8', label: 'Grade 8' },
+    { value: '8', label: 'FORM1' },
     { value: '9', label: 'Grade 9' },
     { value: '10', label: 'Grade 10' },
     { value: '11', label: 'Grade 11' },
@@ -209,6 +210,7 @@ export function ProfileForm({ user, onUpdate, isLoading = false, error = '' }: P
               className={`block w-full px-3 py-2 border rounded-lg shadow-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 ${
                 validationErrors.grade ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : 'border-gray-300'
               }`}
+              aria-label="Select grade level"
             >
               <option value="">Select your grade</option>
               {grades.map(grade => (

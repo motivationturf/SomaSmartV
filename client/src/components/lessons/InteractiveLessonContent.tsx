@@ -21,6 +21,7 @@ import {
 import { Card, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
 import ReactMarkdown from 'react-markdown';
+import Logo from '../ui/Logo';
 
 interface InteractiveLessonContentProps {
   subject: string;
@@ -1160,7 +1161,7 @@ Despite differences, most religions share:
               )}
               <div className="bg-gradient-to-r from-amber-50 to-orange-100 border border-amber-200 rounded-lg p-4 shadow-sm">
                 <div className="flex items-start space-x-3">
-                  <div className="text-3xl">🦅</div>
+                  <Logo className="h-8 w-8" />
                   <div>
                     <h4 className="font-semibold text-amber-900 mb-2">Chisomo's Wisdom</h4>
                     <p className="text-amber-800">{currentStepData.chisomoAdvice}</p>
@@ -1239,7 +1240,7 @@ Despite differences, most religions share:
               {currentStepData.chisomoAdvice && (
                 <div className="bg-gradient-to-r from-amber-50 to-orange-100 border border-amber-200 rounded-lg p-4 shadow-sm mt-4">
                   <div className="flex items-start space-x-3">
-                    <div className="text-3xl">🦅</div>
+                    <Logo className="h-8 w-8" />
                     <div>
                       <h4 className="font-semibold text-amber-900 mb-2">Chisomo's Wisdom</h4>
                       <p className="text-amber-800">{currentStepData.chisomoAdvice}</p>
@@ -1365,7 +1366,7 @@ Despite differences, most religions share:
       {/* Eagle encouragement with enhanced styling */}
       <div className="bg-gradient-to-r from-amber-400 via-orange-500 to-red-500 rounded-xl p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-[1.02]">
         <div className="flex items-start space-x-4">
-          <div className="text-4xl animate-bounce">🦅</div>
+          <Logo className="text-4xl animate-bounce" />
           <div className="text-white">
             <h4 className="font-bold text-lg mb-2">Chisomo's Encouragement</h4>
             <p className="text-amber-100">

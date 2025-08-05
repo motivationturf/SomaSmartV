@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { User, BookOpen, Trophy, Target, TrendingUp } from 'lucide-react';
 import { Card, CardHeader, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
+import { AchievementUnlock } from '../retention/AchievementUnlock';
+import { StreakMilestone } from '../retention/StreakMilestone';
+import { useRetentionAnimations } from '../../hooks/useRetentionAnimations';
+import { UserContext } from '../../context/UserContext';
 
-interface DashboardProps {
-  user: any;
-  onLogout: () => void;
-  onViewProfile: () => void;
-}
+export function Dashboard() {
+  const { user, onLogout, onViewProfile } = useContext(UserContext) as any;
+  const { currentEvent, triggerAchievement, triggerStreakMilestone, clearCurrentEvent } = useRetentionAnimations();
 
-export function Dashboard({ user, onLogout, onViewProfile }: DashboardProps) {
   const subjects = [
     { id: 'computer-studies', name: 'Computer Studies/ICT', progress: 65, color: 'bg-blue-500' },
     { id: 'mathematics', name: 'Mathematics', progress: 78, color: 'bg-green-500' },
@@ -30,6 +31,32 @@ export function Dashboard({ user, onLogout, onViewProfile }: DashboardProps) {
     { label: 'Subjects Active', value: '4', icon: BookOpen, color: 'text-blue-600' },
     { label: 'Goals Completed', value: '2/6', icon: Target, color: 'text-purple-600' }
   ];
+
+  // Example: Trigger achievement when user completes first game
+  const handleGameComplete = (score: number) => {
+    if (score > 80) {
+      triggerAchievement({
+        id: 'first_perfect_score',
+        title: 'Perfect Score!',
+        description: 'You achieved a perfect score on your first game!',
+        icon: 'trophy',
+        rarity: 'rare',
+        points: 100
+      });
+    }
+  };
+
+  // Example: Trigger streak milestone
+  const handleStreakUpdate = (days: number) => {
+    if (days === 7) {
+      triggerStreakMilestone({
+        days: 7,
+        reward: 'Weekly Warrior Badge',
+        multiplier: 1.5,
+        icon: 'flame'
+      });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -168,6 +195,23 @@ export function Dashboard({ user, onLogout, onViewProfile }: DashboardProps) {
           </div>
         </div>
       </div>
+      
+      {/* Retention Animations */}
+      {currentEvent?.type === 'achievement' && (
+        <AchievementUnlock
+          achievement={currentEvent.data}
+          isVisible={true}
+          onClose={clearCurrentEvent}
+        />
+      )}
+      
+      {currentEvent?.type === 'streak' && (
+        <StreakMilestone
+          milestone={currentEvent.data}
+          isVisible={true}
+          onClose={clearCurrentEvent}
+        />
+      )}
     </div>
   );
 }

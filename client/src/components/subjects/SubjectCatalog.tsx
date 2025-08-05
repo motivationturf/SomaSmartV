@@ -1,20 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import { Computer, Calculator, Microscope, BookOpen, ChevronRight, Clock, Trophy, Lock, UserPlus, Play, ArrowRight, Star, Target } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Computer, Calculator, Microscope, BookOpen, ChevronRight, Clock, Trophy, Lock, UserPlus, Play, ArrowRight, Star, Target, X, Users } from 'lucide-react';
 import { Card, CardHeader, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
+import mathematicsTopics from './topics/MathematicsTopics';
+import scienceTopics from './topics/ScienceTopics';
+import computerStudiesTopics from './topics/ComputerStudiesTopics';
+import religiousEducationTopics from './topics/ReligiousEducationTopics';
+import Logo from '../ui/Logo';
+import { AppLayout } from '../layout/AppLayout';
+import type { ProgressUpdate } from '../../types';
 
 interface SubjectCatalogProps {
-  onNavigate: (view: string, subjectId?: string, topicId?: string) => void;
   isGuest?: boolean;
-  onUpdateProgress?: (update: any) => void;
+  onUpdateProgress?: (update: ProgressUpdate) => void;
   initialSubjectId?: string;
+  onShowSubjectsModal?: (subjectId: string) => void;
 }
 
-export function SubjectCatalog({ onNavigate, isGuest = false, onUpdateProgress, initialSubjectId }: SubjectCatalogProps) {
+export function SubjectCatalog({ isGuest = false, onUpdateProgress, initialSubjectId, onShowSubjectsModal }: SubjectCatalogProps) {
+  const navigate = useNavigate();
   const [selectedSubject, setSelectedSubject] = useState<string | null>(initialSubjectId || null);
+  const [showAccessModal, setShowAccessModal] = useState(false);
+  const [pendingSubjectId, setPendingSubjectId] = useState<string | null>(null);
+  const subjectHeaderRef = React.useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (initialSubjectId) setSelectedSubject(initialSubjectId);
   }, [initialSubjectId]);
+  useEffect(() => {
+    if (selectedSubject && subjectHeaderRef.current) {
+      subjectHeaderRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [selectedSubject]);
 
   const subjects = [
     {
@@ -29,48 +46,11 @@ export function SubjectCatalog({ onNavigate, isGuest = false, onUpdateProgress, 
       completedLessons: isGuest ? 0 : 16,
       estimatedTime: '8 weeks',
       difficulty: 'Intermediate',
-      topics: [
-        { 
-          id: 'programming-basics', 
-          name: 'Programming Basics', 
-          lessons: 6, 
-          guestAllowed: true,
-          description: 'Learn fundamental programming concepts and Python basics',
-          icon: '💻',
-          difficulty: 'Beginner'
-        },
-        { 
-          id: 'web-development', 
-          name: 'Web Development', 
-          lessons: 8, 
-          guestAllowed: true,
-          description: 'Build websites with HTML, CSS, and JavaScript',
-          icon: '🌐',
-          difficulty: 'Intermediate'
-        },
-        { 
-          id: 'database-management', 
-          name: 'Database Management', 
-          lessons: 5, 
-          guestAllowed: true,
-          description: 'Design and manage databases with SQL',
-          icon: '🗄️',
-          difficulty: 'Advanced'
-        },
-        { 
-          id: 'digital-citizenship', 
-          name: 'Digital Citizenship', 
-          lessons: 5, 
-          guestAllowed: true,
-          description: 'Online safety, ethics, and responsible technology use',
-          icon: '🛡️',
-          difficulty: 'Beginner'
-        }
-      ],
+      topics: computerStudiesTopics,
       nextLesson: 'Introduction to Python Programming',
       guestAvailable: true,
       guestLessons: 4,
-      eagleAdvice: "🦅 Technology is the future! Start with Programming Basics - it's like learning a new language that computers understand!"
+      mascotAdvice: "SomaSmart says: Technology is the future! Start with Programming Basics—it's like learning a new language that computers understand!"
     },
     {
       id: 'mathematics',
@@ -84,57 +64,11 @@ export function SubjectCatalog({ onNavigate, isGuest = false, onUpdateProgress, 
       completedLessons: isGuest ? 0 : 25,
       estimatedTime: '12 weeks',
       difficulty: 'Advanced',
-      topics: [
-        { 
-          id: 'basic-arithmetic', 
-          name: 'Basic Arithmetic', 
-          lessons: 6, 
-          guestAllowed: true,
-          description: 'Master addition, subtraction, multiplication, and division',
-          icon: '🔢',
-          difficulty: 'Beginner'
-        },
-        { 
-          id: 'algebra', 
-          name: 'Algebra', 
-          lessons: 8, 
-          guestAllowed: true,
-          description: 'Solve equations and work with variables',
-          icon: '📐',
-          difficulty: 'Intermediate'
-        },
-        { 
-          id: 'geometry', 
-          name: 'Geometry', 
-          lessons: 7, 
-          guestAllowed: true,
-          description: 'Explore shapes, angles, and spatial relationships',
-          icon: '📏',
-          difficulty: 'Intermediate'
-        },
-        { 
-          id: 'trigonometry', 
-          name: 'Trigonometry', 
-          lessons: 6, 
-          guestAllowed: true,
-          description: 'Study triangles and circular functions',
-          icon: '📊',
-          difficulty: 'Advanced'
-        },
-        { 
-          id: 'statistics', 
-          name: 'Statistics', 
-          lessons: 5, 
-          guestAllowed: false,
-          description: 'Analyze data and understand probability',
-          icon: '📈',
-          difficulty: 'Advanced'
-        }
-      ],
+      topics: mathematicsTopics,
       nextLesson: 'Quadratic Equations and Functions',
       guestAvailable: true,
       guestLessons: 4,
-      eagleAdvice: "🦅 Math is everywhere! Like an eagle calculating wind speed for flight, you'll learn to solve real-world problems!"
+      mascotAdvice: "SomaSmart says: Math is everywhere! Like a great problem solver, you'll learn to tackle real-world challenges!"
     },
     {
       id: 'sciences',
@@ -148,121 +82,29 @@ export function SubjectCatalog({ onNavigate, isGuest = false, onUpdateProgress, 
       completedLessons: isGuest ? 0 : 19,
       estimatedTime: '14 weeks',
       difficulty: 'Intermediate',
-      topics: [
-        { 
-          id: 'scientific-method', 
-          name: 'Scientific Method', 
-          lessons: 4, 
-          guestAllowed: true,
-          description: 'Learn how scientists investigate the natural world',
-          icon: '🔬',
-          difficulty: 'Beginner'
-        },
-        { 
-          id: 'physics', 
-          name: 'Physics', 
-          lessons: 12, 
-          guestAllowed: true,
-          description: 'Study matter, energy, and the fundamental forces',
-          icon: '⚛️',
-          difficulty: 'Advanced'
-        },
-        { 
-          id: 'chemistry', 
-          name: 'Chemistry', 
-          lessons: 10, 
-          guestAllowed: true,
-          description: 'Explore atoms, molecules, and chemical reactions',
-          icon: '🧪',
-          difficulty: 'Intermediate'
-        },
-        { 
-          id: 'biology', 
-          name: 'Biology', 
-          lessons: 8, 
-          guestAllowed: true,
-          description: 'Discover life processes and living organisms',
-          icon: '🧬',
-          difficulty: 'Intermediate'
-        },
-        { 
-          id: 'environmental-science', 
-          name: 'Environmental Science', 
-          lessons: 2, 
-          guestAllowed: false,
-          description: 'Understand ecosystems and environmental challenges',
-          icon: '🌍',
-          difficulty: 'Beginner'
-        }
-      ],
-      nextLesson: 'Chemical Reactions and Equations',
+      topics: scienceTopics,
+      nextLesson: 'Scientific Method',
       guestAvailable: true,
       guestLessons: 4,
-      eagleAdvice: "🦅 Science helps us understand nature! As an eagle, I appreciate how science explains flight, weather, and ecosystems!"
+      mascotAdvice: "SomaSmart says: Science is discovery! Explore the wonders of the world and unlock your curiosity!"
     },
     {
       id: 'religious-education',
       name: 'Religious Education',
       icon: BookOpen,
-      color: 'bg-orange-500',
-      gradient: 'from-orange-500 to-orange-600',
-      description: 'Study world religions, ethics, moral philosophy, and develop critical thinking skills.',
-      progress: isGuest ? 0 : 43,
+      color: 'bg-yellow-500',
+      gradient: 'from-yellow-500 to-yellow-600',
+      description: 'Explore beliefs, values, and traditions from around the world.',
+      progress: isGuest ? 0 : 40,
       totalLessons: 20,
-      completedLessons: isGuest ? 0 : 9,
+      completedLessons: isGuest ? 0 : 8,
       estimatedTime: '6 weeks',
       difficulty: 'Beginner',
-      topics: [
-        { 
-          id: 'world-religions', 
-          name: 'World Religions', 
-          lessons: 6, 
-          guestAllowed: true,
-          description: 'Explore major world religious traditions',
-          icon: '🕊️',
-          difficulty: 'Beginner'
-        },
-        { 
-          id: 'ethics', 
-          name: 'Ethics', 
-          lessons: 5, 
-          guestAllowed: true,
-          description: 'Study moral principles and decision-making',
-          icon: '⚖️',
-          difficulty: 'Intermediate'
-        },
-        { 
-          id: 'philosophy', 
-          name: 'Philosophy', 
-          lessons: 4, 
-          guestAllowed: true,
-          description: 'Examine fundamental questions about existence',
-          icon: '🤔',
-          difficulty: 'Advanced'
-        },
-        { 
-          id: 'cultural-studies', 
-          name: 'Cultural Studies', 
-          lessons: 3, 
-          guestAllowed: true,
-          description: 'Understand diverse cultural practices and beliefs',
-          icon: '🌍',
-          difficulty: 'Intermediate'
-        },
-        { 
-          id: 'critical-thinking', 
-          name: 'Critical Thinking', 
-          lessons: 2, 
-          guestAllowed: false,
-          description: 'Develop analytical and reasoning skills',
-          icon: '🧠',
-          difficulty: 'Advanced'
-        }
-      ],
-      nextLesson: 'Comparative World Religions',
+      topics: religiousEducationTopics,
+      nextLesson: 'Introduction to Religion',
       guestAvailable: true,
       guestLessons: 4,
-      eagleAdvice: "🦅 Wisdom comes from understanding different perspectives! Like eagles who see the world from great heights, explore diverse viewpoints!"
+      mascotAdvice: "SomaSmart says: Wisdom comes from understanding different perspectives! Explore diverse viewpoints and grow your mind!"
     }
   ];
 
@@ -276,21 +118,28 @@ export function SubjectCatalog({ onNavigate, isGuest = false, onUpdateProgress, 
   };
 
   const handleUpgrade = () => {
-    onNavigate('guest-to-account');
+    navigate('/guest-to-account');
   };
 
-  const handleSubjectSelect = (subjectId: string, available: boolean) => {
+  // Replace handleSubjectSelect logic for subject card click
+  const handleSubjectCardClick = (subjectId: string, available: boolean) => {
     if (!available) return;
-    
-    // Track subject exploration for guests
-    if (isGuest && onUpdateProgress) {
-      onUpdateProgress({
-        subjectsExplored: [subjectId],
-        timeSpent: 2
-      });
+    setPendingSubjectId(subjectId);
+    setShowAccessModal(true);
+  };
+
+  // Called after user chooses access method in modal
+  const handleAccessChoice = (mode: 'signup' | 'login' | 'guest') => {
+    setShowAccessModal(false);
+    if (!pendingSubjectId) return;
+    if (mode === 'signup') {
+      navigate('/signup');
+    } else if (mode === 'login') {
+      navigate('/login');
+    } else if (mode === 'guest') {
+      setSelectedSubject(pendingSubjectId);
     }
-    
-    setSelectedSubject(subjectId);
+    setPendingSubjectId(null);
   };
 
   const handleTopicClick = (subjectId: string, topicId: string, available: boolean) => {
@@ -308,7 +157,7 @@ export function SubjectCatalog({ onNavigate, isGuest = false, onUpdateProgress, 
     }
     
     // Navigate directly to the specific topic lesson
-    onNavigate('lesson', subjectId, topicId);
+    navigate('lesson', { state: { subjectId, topicId } });
   };
 
   const handleBackToSubjects = () => {
@@ -336,14 +185,14 @@ export function SubjectCatalog({ onNavigate, isGuest = false, onUpdateProgress, 
         </Button>
 
         {/* Subject Header */}
-        <div className={`bg-gradient-to-r ${subject.gradient} rounded-2xl p-8 text-white mb-8`}>
+        <div ref={subjectHeaderRef} className={`bg-gradient-to-r ${subject.gradient} rounded-2xl p-8 text-white mb-8`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center">
                 <Icon className="h-8 w-8 text-white" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold mb-2">{subject.name}</h1>
+                <h1 className="text-3xl font-bold mb-2">Explore {subject.name}</h1>
                 <p className="text-white/90 text-lg">{subject.description}</p>
               </div>
             </div>
@@ -373,10 +222,10 @@ export function SubjectCatalog({ onNavigate, isGuest = false, onUpdateProgress, 
         <Card className="mb-8 bg-gradient-to-r from-amber-50 to-orange-100 border-amber-200">
           <CardContent className="p-6">
             <div className="flex items-start space-x-4">
-              <div className="text-5xl">🦅</div>
+              <Logo className="text-5xl" />
               <div className="flex-1">
-                <h3 className="text-xl font-bold text-amber-900 mb-3">Chisomo's Learning Guidance</h3>
-                <p className="text-amber-800 text-lg leading-relaxed">{subject.eagleAdvice}</p>
+                <h3 className="text-xl font-bold text-amber-900 mb-3">SomaSmart's Learning Guidance</h3>
+                <p className="text-amber-800 text-lg leading-relaxed">{subject.mascotAdvice}</p>
                 <div className="mt-4 flex items-center space-x-4 text-sm text-amber-700">
                   <div className="flex items-center space-x-1">
                     <Clock className="h-4 w-4" />
@@ -400,7 +249,7 @@ export function SubjectCatalog({ onNavigate, isGuest = false, onUpdateProgress, 
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">
             Choose Your Learning Path
-            {isGuest && <span className="text-lg text-orange-600 ml-3">(4 Topics Available)</span>}
+            {isGuest && <span className="text-lg text-orange-600 ml-3">(Full Access Available)</span>}
           </h2>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -493,11 +342,11 @@ export function SubjectCatalog({ onNavigate, isGuest = false, onUpdateProgress, 
         {isGuest && (
           <Card className="bg-gradient-to-r from-blue-50 to-green-50 border-blue-200">
             <CardContent className="p-8 text-center">
-              <div className="text-5xl mb-4">🦅</div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Ready to Soar Higher?</h3>
+              <Logo className="text-5xl mb-4" />
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Ready to Save Your Progress?</h3>
               <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-                Chisomo the Eagle believes you're ready for the full learning experience! 
-                Create an account to unlock all topics, save your progress, and earn achievements.
+                You've explored our learning platform! Create an account to save your progress, 
+                track your achievements, and unlock premium features.
               </p>
               <Button onClick={handleUpgrade} size="lg" className="px-8">
                 <UserPlus className="h-5 w-5 mr-2" />
@@ -512,14 +361,15 @@ export function SubjectCatalog({ onNavigate, isGuest = false, onUpdateProgress, 
 
   // Main subjects view
   return (
+    <AppLayout>
     <div className="max-w-7xl mx-auto px-4 py-6">
       {/* Header with Eagle Welcome */}
       <div className="mb-8">
         <div className="text-center mb-8">
-          <div className="text-6xl mb-4">🦅</div>
+          <Logo className="text-6xl mb-4" />
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Welcome to Your Learning Journey!</h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            I'm Chisomo, your learning companion! Choose a subject below to explore topics designed specifically for Zambian students.
+            I'm SomaSmart, your learning companion! Choose a subject below to explore topics designed specifically for Zambian students.
           </p>
         </div>
         
@@ -527,11 +377,11 @@ export function SubjectCatalog({ onNavigate, isGuest = false, onUpdateProgress, 
           <div className="bg-gradient-to-r from-amber-50 to-orange-100 border border-amber-200 rounded-xl p-6 max-w-4xl mx-auto">
             <div className="flex items-center justify-between">
               <div className="flex items-start space-x-4">
-                <div className="text-3xl">🦅</div>
+                <Logo className="text-3xl" />
                 <div>
-                  <h3 className="font-bold text-amber-900 mb-2">Chisomo's Guest Mode Tips</h3>
+                  <h3 className="font-bold text-amber-900 mb-2">SomaSmart's Guest Mode</h3>
                   <p className="text-amber-800">
-                    As a guest, you can explore 4 sample topics per subject. Create an account to unlock the full curriculum and track your progress like a soaring eagle!
+                    Explore all subjects and topics! Create an account to save your progress and unlock premium features with SomaSmart!
                   </p>
                 </div>
               </div>
@@ -552,136 +402,39 @@ export function SubjectCatalog({ onNavigate, isGuest = false, onUpdateProgress, 
         {subjects.map((subject) => {
           const Icon = subject.icon;
           const isLocked = isGuest && !subject.guestAvailable;
-          
           return (
-            <Card 
-              key={subject.id} 
-              className={`overflow-hidden transition-all duration-300 ease-in-out transform hover:scale-105 relative ${
-                isLocked ? 'opacity-75' : 'hover:shadow-xl hover:-translate-y-1 cursor-pointer'
-              }`}
-              onClick={() => handleSubjectSelect(subject.id, !isLocked)}
-            >
-              {isLocked && (
-                <div className="absolute inset-0 bg-gray-50/90 z-10 flex items-center justify-center">
-                  <div className="text-center bg-white p-6 rounded-lg shadow-lg border">
-                    <Lock className="h-8 w-8 text-gray-400 mx-auto mb-3" />
-                    <h3 className="font-semibold text-gray-900 mb-2">Create Account to Unlock</h3>
-                    <p className="text-sm text-gray-600 mb-4">Join Chisomo on this learning adventure!</p>
-                    <Button onClick={handleUpgrade} size="sm">
-                      <UserPlus className="h-4 w-4 mr-2" />
-                      Sign Up Free
-                    </Button>
-                  </div>
-                </div>
-              )}
-              
-              {/* Subject Header with gradient */}
-              <div className={`bg-gradient-to-r ${subject.gradient} p-8 text-white relative overflow-hidden`}>
-                {/* Decorative elements */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
-                <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-12 -translate-x-12"></div>
-                
-                <div className="relative z-10">
-                  <div className="flex items-center justify-between mb-6">
-                    <Icon className="h-12 w-12 text-white" />
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${getDifficultyColor(subject.difficulty)} text-gray-700 bg-white/90`}>
-                      {subject.difficulty}
-                    </span>
-                  </div>
-                  
-                  <h3 className="text-2xl font-bold mb-3">{subject.name}</h3>
-                  <p className="text-white/90 mb-6 leading-relaxed">{subject.description}</p>
-                  
-                  {/* Progress for logged-in users */}
-                  {!isGuest && (
-                    <div className="mb-4">
-                      <div className="flex justify-between text-sm mb-2">
-                        <span>Your Progress</span>
-                        <span>{subject.progress}%</span>
-                      </div>
-                      <div className="w-full bg-white/20 rounded-full h-2">
-                        <div
-                          className="bg-white h-2 rounded-full transition-all duration-300"
-                          style={{ width: `${subject.progress}%` }}
-                        />
-                      </div>
-                    </div>
-                  )}
+            <Card key={subject.id} className="overflow-hidden">
+              <div className={`p-6 ${subject.color} text-white rounded-t-xl flex items-center space-x-4`}>
+                <Icon className="h-8 w-8" />
+                <div>
+                  <h2 className="text-2xl font-bold">{subject.name}</h2>
+                  <p className="text-white/90 text-sm">{subject.description}</p>
                 </div>
               </div>
-
-              <CardContent className="p-8">
-                {/* Stats */}
-                <div className="grid grid-cols-3 gap-6 mb-6">
+              <CardContent className="p-6 bg-white">
+                <div className="flex items-center justify-between mb-4">
                   <div className="text-center">
-                    <div className="flex items-center justify-center mb-2">
-                      <BookOpen className="h-5 w-5 text-gray-600" />
-                    </div>
-                    <p className="text-sm text-gray-600 mb-1">Lessons</p>
-                    <p className="text-xl font-bold text-gray-900">
-                      {isGuest 
-                        ? `${subject.guestLessons}/${subject.totalLessons}` 
-                        : `${subject.completedLessons}/${subject.totalLessons}`
-                      }
-                    </p>
+                    <div className="text-lg font-bold text-gray-900">{subject.completedLessons}/{subject.totalLessons}</div>
+                    <div className="text-xs text-gray-600">Lessons</div>
                   </div>
                   <div className="text-center">
-                    <div className="flex items-center justify-center mb-2">
-                      <Clock className="h-5 w-5 text-gray-600" />
-                    </div>
-                    <p className="text-sm text-gray-600 mb-1">Duration</p>
-                    <p className="text-xl font-bold text-gray-900">{subject.estimatedTime}</p>
+                    <div className="text-lg font-bold text-gray-900">{subject.estimatedTime}</div>
+                    <div className="text-xs text-gray-600">Duration</div>
                   </div>
                   <div className="text-center">
-                    <div className="flex items-center justify-center mb-2">
-                      <Trophy className="h-5 w-5 text-gray-600" />
-                    </div>
-                    <p className="text-sm text-gray-600 mb-1">Topics</p>
-                    <p className="text-xl font-bold text-gray-900">{subject.topics.length}</p>
+                    <div className="text-lg font-bold text-gray-900">{subject.topics.length}</div>
+                    <div className="text-xs text-gray-600">Topics</div>
                   </div>
                 </div>
-
-                {/* Next Lesson Preview */}
-                <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                  <div className="flex items-center space-x-3">
-                    <Star className="h-5 w-5 text-blue-600" />
-                    <div>
-                      <p className="text-sm font-medium text-blue-900">
-                        {isGuest && subject.guestAvailable ? 'Try Sample Lesson' : 'Continue With'}
-                      </p>
-                      <p className="text-sm text-blue-700">{subject.nextLesson}</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Action Button */}
                 <Button
-                  className="w-full"
+                  className={`w-full mt-4 ${isLocked ? 'opacity-50 cursor-not-allowed' : ''}`}
                   disabled={isLocked}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (!isLocked) handleSubjectSelect(subject.id, true);
+                  onClick={() => {
+                    if (!isLocked) setSelectedSubject(subject.id);
                   }}
                 >
-                  {isGuest && subject.guestAvailable 
-                    ? (
-                      <>
                         <Play className="h-4 w-4 mr-2" />
                         Explore Topics
-                      </>
-                    ) : isGuest 
-                      ? (
-                        <>
-                          <Lock className="h-4 w-4 mr-2" />
-                          Locked
-                        </>
-                      ) : (
-                        <>
-                          <ChevronRight className="h-4 w-4 mr-2" />
-                          View Topics
-                        </>
-                      )
-                  }
                 </Button>
               </CardContent>
             </Card>
@@ -689,6 +442,61 @@ export function SubjectCatalog({ onNavigate, isGuest = false, onUpdateProgress, 
         })}
       </div>
 
+      {/* Access Modal */}
+      {showAccessModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl p-8 max-w-md w-full relative shadow-2xl">
+            <button
+              onClick={() => setShowAccessModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+              aria-label="Close modal"
+              title="Close modal"
+            >
+              <X className="h-6 w-6" />
+            </button>
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg bg-gradient-to-r from-green-600 to-blue-600">
+                <BookOpen className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                Access Subjects
+              </h3>
+              <p className="text-gray-600">
+                Choose how you'd like to access our learning subjects
+              </p>
+            </div>
+            <div className="space-y-3">
+              <Button
+                onClick={() => handleAccessChoice('signup')}
+                className="w-full py-3 bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white border-0 shadow-lg transition-all duration-300"
+                variant="zambian-primary"
+              >
+                <Star className="h-4 w-4 mr-2" />
+                Sign Up & Play (Recommended)
+              </Button>
+              <Button
+                onClick={() => handleAccessChoice('login')}
+                className="w-full py-3 bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white border-0 shadow-lg transition-all duration-300"
+                variant="zambian-primary"
+              >
+                <UserPlus className="h-4 w-4 mr-2" />
+                Sign In to Continue
+              </Button>
+              <Button
+                onClick={() => handleAccessChoice('guest')}
+                className="w-full py-3 bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white border-0 shadow-lg transition-all duration-300"
+                variant="zambian-primary"
+              >
+                <Users className="h-4 w-4 mr-2" />
+                Try as Guest (Limited Access)
+              </Button>
+            </div>
+            <p className="text-xs text-gray-500 text-center mt-4">
+              Guest mode includes 4 sample topics per subject. Create an account for full access!
+            </p>
+          </div>
+        </div>
+      )}
       {/* Eagle's Motivational Message */}
       <Card className="mt-12 bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 text-white overflow-hidden">
         <CardContent className="p-8 relative">
@@ -697,8 +505,8 @@ export function SubjectCatalog({ onNavigate, isGuest = false, onUpdateProgress, 
           <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full translate-y-16 -translate-x-16"></div>
           
           <div className="relative z-10 text-center">
-            <div className="text-6xl mb-4">🦅</div>
-            <h3 className="text-2xl font-bold mb-4">Chisomo's Learning Philosophy</h3>
+            <Logo className="text-6xl mb-4" />
+            <h3 className="text-2xl font-bold mb-4">SomaSmart's Learning Philosophy</h3>
             <p className="text-lg text-white/90 max-w-3xl mx-auto leading-relaxed">
               "Like an eagle that soars high above the mountains, learning takes you to new heights! 
               Each subject is a different wind current that will help you fly further. 
@@ -722,5 +530,8 @@ export function SubjectCatalog({ onNavigate, isGuest = false, onUpdateProgress, 
         </CardContent>
       </Card>
     </div>
+    </AppLayout>
   );
 }
+
+export default SubjectCatalog;

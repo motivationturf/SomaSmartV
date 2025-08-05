@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   Target, 
   Trophy, 
@@ -18,6 +19,8 @@ import {
 } from 'lucide-react';
 import { Card, CardHeader, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
+import { AppLayout } from '../layout/AppLayout';
+import { Mascot } from '../mascot';
 import { ChallengeCard } from './ChallengeCard';
 import { ChallengeFilters } from './ChallengeFilters';
 import { ChallengeStats } from './ChallengeStats';
@@ -25,12 +28,12 @@ import { ChallengeDetail } from './ChallengeDetail';
 import { ChallengeMode } from './ChallengeMode';
 
 interface ChallengesPageProps {
-  onNavigate: (view: string) => void;
   isGuest?: boolean;
   onUpdateProgress?: (update: any) => void;
 }
 
-export function ChallengesPage({ onNavigate, isGuest = false, onUpdateProgress }: ChallengesPageProps) {
+export function ChallengesPage({ isGuest = false, onUpdateProgress }: ChallengesPageProps) {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<'active' | 'completed' | 'upcoming'>('active');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSubject, setSelectedSubject] = useState('all');
@@ -170,7 +173,7 @@ export function ChallengesPage({ onNavigate, isGuest = false, onUpdateProgress }
   };
 
   const handleUpgrade = () => {
-    onNavigate('guest-to-account');
+    navigate('/guest-to-account');
   };
 
   const handleChallengeClick = (challengeId: number) => {
@@ -202,7 +205,8 @@ export function ChallengesPage({ onNavigate, isGuest = false, onUpdateProgress }
   };
 
   const handleViewResults = (challengeId: number) => {
-    console.log('Viewing results for challenge:', challengeId);
+    // TODO: Implement challenge results view
+    alert(`Viewing results for challenge: ${challengeId}`);
   };
 
   // Filter challenges based on current filters
@@ -247,6 +251,7 @@ export function ChallengesPage({ onNavigate, isGuest = false, onUpdateProgress }
   }
 
   return (
+    <AppLayout>
     <div className="max-w-7xl mx-auto px-4 py-6">
       {/* Header */}
       <div className="mb-8">
@@ -270,8 +275,8 @@ export function ChallengesPage({ onNavigate, isGuest = false, onUpdateProgress }
           <div className="bg-gradient-to-r from-blue-50 to-green-50 border border-blue-200 rounded-lg p-4">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="font-medium text-blue-900">Guest Mode - Try Sample Challenges</h3>
-                <p className="text-sm text-blue-700">Experience our challenge system. Create an account to join all competitions and track progress.</p>
+                  <h3 className="font-medium text-blue-900">Guest Mode - Full Access</h3>
+                  <p className="text-sm text-blue-700">Try all challenges! Create an account to save your progress and unlock premium features.</p>
               </div>
               <Button
                 onClick={handleUpgrade}
@@ -355,7 +360,9 @@ export function ChallengesPage({ onNavigate, isGuest = false, onUpdateProgress }
       {filteredChallenges.length === 0 && (
         <div className="text-center py-12">
           <div className="max-w-md mx-auto">
-            <Target className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+            <div className="flex justify-center mb-6">
+              <Mascot size="lg" mood="encouraging" showBubble={false} />
+            </div>
             <h3 className="text-xl font-medium text-gray-900 mb-2">No challenges found</h3>
             <p className="text-gray-600 mb-6">
               {activeTab === 'active' && "No active challenges match your filters. Try adjusting your search criteria."}
@@ -425,5 +432,6 @@ export function ChallengesPage({ onNavigate, isGuest = false, onUpdateProgress }
         </div>
       )}
     </div>
+    </AppLayout>
   );
 }

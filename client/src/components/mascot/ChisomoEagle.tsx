@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Lightbulb, Star, Trophy, Target, Heart } from 'lucide-react';
+import Logo from '../ui/Logo';
 
 interface ChisomoEagleProps {
   message?: string;
@@ -11,31 +12,21 @@ interface ChisomoEagleProps {
 }
 
 export function ChisomoEagle({ 
-  message = "Keep soaring high, young learner!", 
+  message = "Keep going, young learner!", 
   size = 'md',
   mood = 'happy',
   showBubble = true,
   animated = true,
   className = ""
 }: ChisomoEagleProps) {
-  const [currentEagle, setCurrentEagle] = useState('🦅');
   const [isVisible, setIsVisible] = useState(false);
-
-  // Eagle expressions based on mood
-  const eagleExpressions = {
-    happy: '🦅',
-    encouraging: '🦅',
-    proud: '🦅',
-    wise: '🦅',
-    excited: '🦅'
-  };
 
   // Size configurations
   const sizeConfig = {
-    sm: { eagle: 'text-2xl', bubble: 'text-xs p-2', container: 'w-16' },
-    md: { eagle: 'text-4xl', bubble: 'text-sm p-3', container: 'w-20' },
-    lg: { eagle: 'text-6xl', bubble: 'text-base p-4', container: 'w-24' },
-    xl: { eagle: 'text-8xl', bubble: 'text-lg p-5', container: 'w-32' }
+    sm: { mascot: 'text-2xl', bubble: 'text-xs p-2', container: 'w-16' },
+    md: { mascot: 'text-4xl', bubble: 'text-sm p-3', container: 'w-20' },
+    lg: { mascot: 'text-6xl', bubble: 'text-base p-4', container: 'w-24' },
+    xl: { mascot: 'text-8xl', bubble: 'text-lg p-5', container: 'w-32' }
   };
 
   // Mood-based messages
@@ -43,22 +34,22 @@ export function ChisomoEagle({
     happy: [
       "You're doing great! Keep learning!",
       "Every question makes you stronger!",
-      "Learning is like flying - the more you practice, the higher you soar!"
+      "Learning is a journey – keep going!"
     ],
     encouraging: [
-      "Don't give up! Eagles never quit!",
+      "Don't give up! Chisomo believes in you!",
       "Every expert was once a beginner!",
       "You've got this! I believe in you!"
     ],
     proud: [
-      "Amazing work! You're soaring to new heights!",
+      "Amazing work! You're reaching new heights!",
       "I'm proud of your progress!",
-      "You're becoming a true learning eagle!"
+      "You're becoming a true SomaSmart star!"
     ],
     wise: [
       "Remember: Knowledge is power, but wisdom is knowing how to use it.",
       "The best time to plant a tree was 20 years ago. The second best time is now.",
-      "Success is not final, failure is not fatal - it's courage that counts!"
+      "Success is not final, failure is not fatal – it's courage that counts!"
     ],
     excited: [
       "This is so exciting! Let's learn together!",
@@ -69,7 +60,7 @@ export function ChisomoEagle({
 
   // Get random message based on mood if no specific message provided
   useEffect(() => {
-    if (!message || message === "Keep soaring high, young learner!") {
+    if (!message || message === "Keep going, young learner!") {
       const messages = moodMessages[mood];
       const randomMessage = messages[Math.floor(Math.random() * messages.length)];
       // You could set this to state if you want random messages
@@ -101,11 +92,11 @@ export function ChisomoEagle({
 
   return (
     <div className={`relative ${sizeConfig[size].container} ${className}`}>
-      {/* Main Eagle */}
+      {/* Main Mascot Logo */}
       <div 
         className={`
-          ${sizeConfig[size].eagle}
-          eagle-mascot
+          ${sizeConfig[size].mascot}
+          mascot-logo
           ${animated ? 'animate-float' : ''}
           ${isVisible ? 'animate-scale-in' : 'opacity-0'}
           cursor-pointer
@@ -113,13 +104,12 @@ export function ChisomoEagle({
           transition-all duration-300
         `}
         onClick={() => {
-          // Add click interaction - could trigger sound or animation
-          const eagle = document.querySelector('.eagle-mascot');
-          eagle?.classList.add('animate-pulse');
-          setTimeout(() => eagle?.classList.remove('animate-pulse'), 600);
+          const mascot = document.querySelector('.mascot-logo');
+          mascot?.classList.add('animate-pulse');
+          setTimeout(() => mascot?.classList.remove('animate-pulse'), 600);
         }}
       >
-        {currentEagle}
+        <Logo className={sizeConfig[size].mascot} />
       </div>
 
       {/* Speech Bubble */}
@@ -127,7 +117,7 @@ export function ChisomoEagle({
         <div 
           className={`
             absolute top-0 left-full ml-4 z-10
-            eagle-speech-bubble
+            mascot-speech-bubble
             ${sizeConfig[size].bubble}
             ${isVisible ? 'animate-slide-in-left' : 'opacity-0'}
             max-w-xs
@@ -142,7 +132,7 @@ export function ChisomoEagle({
                 {message}
               </p>
               <div className="text-xs text-amber-700 mt-1 font-semibold">
-                - Chisomo the Eagle
+                - Chisomo
               </div>
             </div>
           </div>
@@ -166,7 +156,7 @@ export const ChisomoPresets = {
   Welcome: (props: Partial<ChisomoEagleProps>) => (
     <ChisomoEagle 
       mood="excited" 
-      message="Welcome to SomaSmart! Ready to soar to new heights?" 
+      message="Welcome to SomaSmart! Ready to learn something new?" 
       size="lg"
       {...props} 
     />
@@ -175,7 +165,7 @@ export const ChisomoPresets = {
   GameComplete: (props: Partial<ChisomoEagleProps>) => (
     <ChisomoEagle 
       mood="proud" 
-      message="Outstanding! You've mastered this challenge like a true eagle!" 
+      message="Outstanding! You've mastered this challenge!" 
       size="md"
       {...props} 
     />
@@ -184,7 +174,7 @@ export const ChisomoPresets = {
   Encouragement: (props: Partial<ChisomoEagleProps>) => (
     <ChisomoEagle 
       mood="encouraging" 
-      message="Don't worry about mistakes - that's how eagles learn to fly!" 
+      message="Don't worry about mistakes – that's how we learn!" 
       size="md"
       {...props} 
     />
@@ -193,7 +183,7 @@ export const ChisomoPresets = {
   Wisdom: (props: Partial<ChisomoEagleProps>) => (
     <ChisomoEagle 
       mood="wise" 
-      message="Remember: The eagle that soars highest has learned from every wind." 
+      message="Remember: Wisdom grows with every question you ask." 
       size="md"
       {...props} 
     />
@@ -202,7 +192,7 @@ export const ChisomoPresets = {
   Hint: (props: Partial<ChisomoEagleProps>) => (
     <ChisomoEagle 
       mood="happy" 
-      message="Here's a tip from high above the clouds..." 
+      message="Here's a tip from Chisomo..." 
       size="sm"
       {...props} 
     />

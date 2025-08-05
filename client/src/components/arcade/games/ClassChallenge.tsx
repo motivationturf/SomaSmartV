@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { Card, CardHeader, CardContent } from '../../ui/Card';
 import { Button } from '../../ui/Button';
+import Logo from '../../ui/Logo';
 
 interface ClassChallengeProps {
   config: {
@@ -76,35 +77,35 @@ export function ClassChallenge({ config, onBack, isGuest = false, onUpdateProgre
         options: ["170", "180", "190", "200"],
         correct: 1,
         explanation: "15 × 12 = 180",
-        eagleTip: "🦅 Break it down: 15 × 10 = 150, then 15 × 2 = 30, so 150 + 30 = 180!"
+        eagleTip: "Break it down: 15 × 10 = 150, then 15 × 2 = 30, so 150 + 30 = 180!"
       },
       {
         question: "What is the area of a rectangle with length 8 and width 5?",
         options: ["35", "40", "45", "50"],
         correct: 1,
         explanation: "Area = length × width = 8 × 5 = 40",
-        eagleTip: "🦅 Rectangle area is simple - just multiply length times width!"
+        eagleTip: "Rectangle area is simple - just multiply length times width!"
       },
       {
         question: "What is 25% of 80?",
         options: ["15", "20", "25", "30"],
         correct: 1,
         explanation: "25% of 80 = 0.25 × 80 = 20",
-        eagleTip: "🦅 25% is the same as 1/4, so divide 80 by 4!"
+        eagleTip: "25% is the same as 1/4, so divide 80 by 4!"
       },
       {
         question: "What is √36?",
         options: ["4", "5", "6", "7"],
         correct: 2,
         explanation: "√36 = 6 because 6 × 6 = 36",
-        eagleTip: "🦅 Think: what number times itself equals 36?"
+        eagleTip: "Think: what number times itself equals 36?"
       },
       {
         question: "What is the perimeter of a square with side length 6?",
         options: ["20", "22", "24", "26"],
         correct: 2,
         explanation: "Perimeter = 4 × side length = 4 × 6 = 24",
-        eagleTip: "🦅 A square has 4 equal sides, so multiply the side length by 4!"
+        eagleTip: "A square has 4 equal sides, so multiply the side length by 4!"
       }
     ],
     'computer-studies': [
@@ -113,28 +114,28 @@ export function ClassChallenge({ config, onBack, isGuest = false, onUpdateProgre
         options: ["Computer Processing Unit", "Central Processing Unit", "Central Program Unit", "Computer Program Unit"],
         correct: 1,
         explanation: "CPU stands for Central Processing Unit - the brain of the computer",
-        eagleTip: "🦅 The CPU is like my brain - it processes all the information!"
+        eagleTip: "The CPU is like my brain - it processes all the information!"
       },
       {
         question: "What is binary 1010 in decimal?",
         options: ["8", "10", "12", "14"],
         correct: 1,
         explanation: "1010₂ = 1×8 + 0×4 + 1×2 + 0×1 = 8 + 0 + 2 + 0 = 10",
-        eagleTip: "🦅 Binary uses powers of 2: 8, 4, 2, 1 from left to right!"
+        eagleTip: "Binary uses powers of 2: 8, 4, 2, 1 from left to right!"
       },
       {
         question: "Which HTML tag creates a hyperlink?",
         options: ["<link>", "<a>", "<url>", "<href>"],
         correct: 1,
         explanation: "The <a> tag (anchor) creates hyperlinks in HTML",
-        eagleTip: "🦅 Think 'anchor' - it anchors text to a destination!"
+        eagleTip: "Think 'anchor' - it anchors text to a destination!"
       },
       {
         question: "What does RAM stand for?",
         options: ["Random Access Memory", "Read Access Memory", "Rapid Access Memory", "Real Access Memory"],
         correct: 0,
         explanation: "RAM stands for Random Access Memory - temporary storage for active programs",
-        eagleTip: "🦅 RAM is like my short-term memory - quick access but doesn't last!"
+        eagleTip: "RAM is like my short-term memory - quick access but doesn't last!"
       }
     ],
     sciences: [
@@ -143,28 +144,28 @@ export function ClassChallenge({ config, onBack, isGuest = false, onUpdateProgre
         options: ["H₂O", "HO₂", "H₃O", "H₂O₂"],
         correct: 0,
         explanation: "Water consists of 2 hydrogen atoms and 1 oxygen atom: H₂O",
-        eagleTip: "🦅 Water is essential for all life - even eagles need it to survive!"
+        eagleTip: "Water is essential for all life - even eagles need it to survive!"
       },
       {
         question: "Which planet is closest to the Sun?",
         options: ["Venus", "Earth", "Mercury", "Mars"],
         correct: 2,
         explanation: "Mercury is the closest planet to the Sun in our solar system",
-        eagleTip: "🦅 Mercury is so close to the Sun, a year there is only 88 Earth days!"
+        eagleTip: "Mercury is so close to the Sun, a year there is only 88 Earth days!"
       },
       {
         question: "What gas do plants absorb during photosynthesis?",
         options: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"],
         correct: 1,
         explanation: "Plants absorb carbon dioxide (CO₂) and release oxygen during photosynthesis",
-        eagleTip: "🦅 Plants are nature's air purifiers - they clean the air I fly through!"
+        eagleTip: "Plants are nature's air purifiers - they clean the air I fly through!"
       },
       {
         question: "What is the chemical symbol for gold?",
         options: ["Go", "Gd", "Au", "Ag"],
         correct: 2,
         explanation: "Gold's chemical symbol is Au, from the Latin word 'aurum'",
-        eagleTip: "🦅 Many chemical symbols come from Latin names - that's why gold is Au!"
+        eagleTip: "Many chemical symbols come from Latin names - that's why gold is Au!"
       }
     ],
     'religious-education': [
@@ -173,21 +174,21 @@ export function ClassChallenge({ config, onBack, isGuest = false, onUpdateProgre
         options: ["Hinduism", "Buddhism", "Jainism", "Sikhism"],
         correct: 1,
         explanation: "Buddhism was founded by Siddhartha Gautama, who became known as the Buddha",
-        eagleTip: "🦅 Buddha means 'the awakened one' - wisdom comes from understanding!"
+        eagleTip: "Buddha means 'the awakened one' - wisdom comes from understanding!"
       },
       {
         question: "What is the holy book of Islam?",
         options: ["Bible", "Torah", "Quran", "Vedas"],
         correct: 2,
         explanation: "The Quran is the central religious text of Islam",
-        eagleTip: "🦅 Different faiths have different sacred texts that guide their believers!"
+        eagleTip: "Different faiths have different sacred texts that guide their believers!"
       },
       {
         question: "What does the Golden Rule teach?",
         options: ["Pray daily", "Give to charity", "Treat others as you want to be treated", "Fast regularly"],
         correct: 2,
         explanation: "The Golden Rule teaches us to treat others as we would like to be treated",
-        eagleTip: "🦅 This wise principle appears in many different religions around the world!"
+        eagleTip: "This wise principle appears in many different religions around the world!"
       }
     ]
   };
@@ -297,10 +298,10 @@ export function ClassChallenge({ config, onBack, isGuest = false, onUpdateProgre
           <div className="mb-6 bg-amber-50 border border-amber-200 rounded-lg p-4 max-w-2xl mx-auto">
             <div className="flex items-center justify-center space-x-2 text-amber-800">
               <Trophy className="h-5 w-5" />
-              <span className="font-medium">Guest Mode: Limited Access</span>
+              <span className="font-medium">Guest Mode: Full Access</span>
             </div>
             <p className="text-amber-700 text-sm mt-1 text-center">
-              Create an account to unlock full challenge features and save your progress!
+              Try the challenge! Create an account to save your progress and unlock premium features!
             </p>
           </div>
         )}
@@ -476,7 +477,7 @@ export function ClassChallenge({ config, onBack, isGuest = false, onUpdateProgre
 
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
           <div className="flex items-start space-x-3">
-            <div className="text-3xl">🦅</div>
+            <Logo className="inline h-5 w-5 align-middle" />
             <div>
               <h4 className="font-semibold text-amber-900 mb-1">Chisomo's Challenge Tips</h4>
               <p className="text-amber-800 text-sm">
@@ -565,6 +566,8 @@ function CreateChallengeForm({ onSubmit, loading, error, defaultSubject }: {
           value={formData.subject}
           onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          aria-label="Select subject"
+          title="Select subject"
         >
           {subjects.map((subject) => (
             <option key={subject.id} value={subject.id}>
@@ -583,6 +586,8 @@ function CreateChallengeForm({ onSubmit, loading, error, defaultSubject }: {
             value={formData.questionCount}
             onChange={(e) => setFormData({ ...formData, questionCount: parseInt(e.target.value) })}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            aria-label="Select number of questions"
+            title="Select number of questions"
           >
             <option value={5}>5 Questions</option>
             <option value={10}>10 Questions</option>
@@ -599,6 +604,8 @@ function CreateChallengeForm({ onSubmit, loading, error, defaultSubject }: {
             value={formData.timeLimit}
             onChange={(e) => setFormData({ ...formData, timeLimit: parseInt(e.target.value) })}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            aria-label="Select time limit"
+            title="Select time limit"
           >
             <option value={300}>5 minutes</option>
             <option value={600}>10 minutes</option>

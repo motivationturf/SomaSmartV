@@ -22,50 +22,58 @@ export function Carousel({ onExploreArcade }: CarouselProps) {
   const slides: CarouselSlide[] = [
     {
       id: 1,
-      headline: "Gamify Your Learning Journey",
-      description: "Interactive quizzes. Fun games. Serious learning.",
-      visual: "🎮",
+      headline: "Mulungushi Quiz",
+      description: "Test your strength of mind with solo challenges.",
+      visual: "💪",
       bgGradient: "from-purple-600 via-blue-600 to-cyan-500",
       textColor: "text-white"
     },
     {
       id: 2,
-      headline: "Brain Buster Mode",
-      description: "Challenge yourself with subject-based multiple-choice questions and instant feedback.",
-      visual: "🧠",
+      headline: "Luangwa Flip",
+      description: "Flip through fast facts and sharpen your memory.",
+      visual: "🔄",
       bgGradient: "from-green-500 via-emerald-500 to-teal-500",
       textColor: "text-white"
     },
     {
       id: 3,
-      headline: "Time Challenge",
-      description: "Speed up your thinking – answer as many questions as you can in 60 seconds!",
+      headline: "Zambezi Rush",
+      description: "Beat the clock in this rapid-fire timed quiz.",
       visual: "⏱️",
       bgGradient: "from-orange-500 via-red-500 to-pink-500",
       textColor: "text-white"
     },
     {
       id: 4,
-      headline: "Jumble Master Game",
-      description: "Unscramble words or formulas to test your memory and logic skills.",
+      headline: "Kundalila Puzzles",
+      description: "Unscramble clues and discover the missing pieces.",
       visual: "🧩",
       bgGradient: "from-indigo-500 via-purple-500 to-pink-500",
       textColor: "text-white"
     },
     {
       id: 5,
-      headline: "Progress + Badges",
-      description: "Track your scores, earn rewards, and unlock badges as you level up.",
-      visual: "🏆",
+      headline: "Kalambo Clash",
+      description: "Compete with classmates in high-stakes brain duels.",
+      visual: "⚔️",
       bgGradient: "from-yellow-500 via-orange-500 to-red-500",
       textColor: "text-white"
     },
     {
       id: 6,
-      headline: "Proudly Zambian, Globally Smart",
-      description: "Inspired by Zambia's culture, built for modern students.",
+      headline: "Zed Legacy",
+      description: "Discover Zambia’s history, heroes, and culture.",
       visual: "🇿🇲",
       bgGradient: "from-green-600 via-orange-500 to-red-600",
+      textColor: "text-white"
+    },
+    {
+      id: 7,
+      headline: "Chisomo AI Hub",
+      description: "Your smart Academic assistant.",
+      visual: "🤖",
+      bgGradient: "from-blue-700 via-green-500 to-emerald-400",
       textColor: "text-white"
     }
   ];
@@ -119,15 +127,7 @@ export function Carousel({ onExploreArcade }: CarouselProps) {
   return (
     <div className="w-full max-w-7xl mx-auto px-4">
       {/* Section Header */}
-      <div className="text-center mb-8">
-        <div className="text-4xl mb-3">🦅</div>
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
-          Experience Learning Like Never Before
-        </h2>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          Discover the exciting features that make SomaSmart EduHub the perfect learning companion for Zambian students.
-        </p>
-      </div>
+      {/* Removed duplicate eagle and heading here */}
 
       {/* Carousel Container */}
       <div 
@@ -217,42 +217,6 @@ export function Carousel({ onExploreArcade }: CarouselProps) {
               width: `${((currentSlide + 1) / slides.length) * 100}%` 
             }}
           />
-        </div>
-      </div>
-
-      {/* CTA Section */}
-      <div className="text-center mt-8">
-        <div className="mb-4">
-          <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">
-            Ready to Start Your Adventure?
-          </h3>
-          <p className="text-gray-600 max-w-xl mx-auto text-sm md:text-base">
-            Join thousands of Zambian students who are already experiencing the future of learning with our interactive game arcade.
-          </p>
-        </div>
-        
-        <button
-          onClick={onExploreArcade}
-          className="inline-flex items-center px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-        >
-          <span className="text-xl md:text-2xl mr-2 md:mr-3">🎮</span>
-          Explore the Arcade
-          <ChevronRight className="h-4 w-4 md:h-5 md:w-5 ml-2" />
-        </button>
-        
-        <div className="mt-4 flex items-center justify-center space-x-4 md:space-x-6 text-xs md:text-sm text-gray-500">
-          <div className="flex items-center space-x-1">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-            <span>Free to Start</span>
-          </div>
-          <div className="flex items-center space-x-1">
-            <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-            <span>No Downloads</span>
-          </div>
-          <div className="flex items-center space-x-1">
-            <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
-            <span>Works on All Devices</span>
-          </div>
         </div>
       </div>
 
