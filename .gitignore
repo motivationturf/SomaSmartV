@@ -7,3 +7,4 @@ vite.config.ts.*
 
 # YoYo AI version control directory
 .yoyo/
+.env
