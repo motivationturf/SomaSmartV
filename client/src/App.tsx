@@ -3,9 +3,11 @@ import { Routes, Route } from 'react-router-dom';
 import { AuthProviderV2 } from './context/AuthContextV2';
 import { AuthGuard, ProtectedRoute, GuestOnlyRoute, UserOnlyRoute } from './components/auth/AuthGuard';
 import { Navigation } from './components/layout/Navigation';
+import { LoadingSpinner } from './components/ui/LoadingSpinner';
 import SupabaseApp from './components/SupabaseApp';
 import './index.css';
 
+// Lazy load pages for better performance
 const LandingPage = lazy(() => import('./pages/LandingPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage'));
 const RegisterPage = lazy(() => import('./pages/RegisterPage'));
@@ -25,7 +27,15 @@ const ChisomoChatPage = lazy(() => import('./pages/ChisomoChatPage'));
 const StudyPlannerPage = lazy(() => import('./pages/StudyPlannerPage'));
 const LearningInsightsPage = lazy(() => import('./pages/LearningInsightsPage'));
 const ContentStudioPage = lazy(() => import('./pages/ContentStudioPage'));
-const LAMGeneratorPage = lazy(() => import('./pages/LAMGeneratorPage'));
+
+// Loading component
+function PageLoader() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <LoadingSpinner size="lg" text="Loading..." />
+    </div>
+  );
+}
 
 export default function App() {
   return (
@@ -33,7 +43,7 @@ export default function App() {
       <div className="min-h-screen bg-gray-50">
         <Navigation />
         <main className="flex-1">
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<PageLoader />}>
             <Routes>
               {/* Public routes */}
               <Route path="/" element={<LandingPage />} />
@@ -64,6 +74,14 @@ export default function App() {
               />
               <Route 
                 path="/subjects" 
+                element={
+                  <ProtectedRoute>
+                    <SubjectsPage />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/subjects/:subjectId/topics" 
                 element={
                   <ProtectedRoute>
                     <SubjectsPage />
@@ -103,10 +121,26 @@ export default function App() {
                 } 
               />
               <Route 
+                path="/lesson" 
+                element={
+                  <ProtectedRoute>
+                    <LessonPage />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
                 path="/lesson/:lessonId" 
                 element={
                   <ProtectedRoute>
                     <LessonPage />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/quiz" 
+                element={
+                  <ProtectedRoute>
+                    <QuizPage />
                   </ProtectedRoute>
                 } 
               />
@@ -158,15 +192,9 @@ export default function App() {
                   </ProtectedRoute>
                 } 
               />
-              <Route 
-                path="/teacher/lam" 
-                element={
-                  <ProtectedRoute>
-                    <LAMGeneratorPage />
-                  </ProtectedRoute>
-                } 
-              />
-              {/* Add more routes as needed */}
+              
+              {/* Catch all route */}
+              <Route path="*" element={<LandingPage />} />
             </Routes>
           </Suspense>
         </main>
